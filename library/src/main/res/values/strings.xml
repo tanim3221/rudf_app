@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notify_title">RUDF Contact </string>
+    <string name="android_auto_update_dialog_title">RUDF Contact app update </string>
+    <string name="android_auto_update_notify_ticker"> RUDF Contact new version update, click here to install </string>
+    <string name="android_auto_update_dialog_btn_download"> Update </string>
+    <string name="android_auto_update_toast_no_new_update"> No updates </string>
+    <string name="android_auto_update_download_progress"> Download %1$d%%</string>
+    <string name="android_auto_update_dialog_checking"> Looking for the new version ... </string>
+    <string name="android_auto_update_content"> RUDF Contact app update </string>
+</resources>

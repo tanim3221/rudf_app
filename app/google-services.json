@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "27837742137",
+    "firebase_url": "https://aisdatabase.firebaseio.com",
+    "project_id": "aisdatabase",
+    "storage_bucket": "aisdatabase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27837742137:android:a513f372ecae253964e1e8",
+        "android_client_info": {
+          "package_name": "com.icche.aisdatabase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27837742137-f838gubv97iho665t6c33id02qh3de98.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFZOi1kBERZemfi048ZwzBnldfDtZw-x8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27837742137-f838gubv97iho665t6c33id02qh3de98.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
