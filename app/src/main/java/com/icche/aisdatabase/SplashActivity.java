@@ -58,7 +58,7 @@ public class SplashActivity extends AppCompatActivity {
 }*/
         ProgressBar progressBar = findViewById(R.id.progress);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
             Drawable wrapDrawable = DrawableCompat.wrap(progressBar.getIndeterminateDrawable());
             DrawableCompat.setTint(wrapDrawable, ContextCompat.getColor(getApplicationContext(),
                     R.color.colorPrimary));
@@ -71,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
         Thread timerThread = new Thread() {
             public void run() {
                 try {
-                    sleep(1500);
+                    sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {

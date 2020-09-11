@@ -199,9 +199,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_info_white" />
-                            <entry key="sourceFile" value="C:\Users\SAKLAYEN TANIM" />
+                            <entry key="outputName" value="ic_cover_top" />
+                            <entry key="sourceFile" value="C:\Users\SAKLAYEN TANIM\Desktop\cover_top.svg" />
                           </map>
                         </option>
                       </PersistentState>
