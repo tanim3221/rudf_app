@@ -1,4 +1,4 @@
-package com.androiddeft.firebasepushnotification;
+package com.icche.aisdatabase;
 
 import org.junit.Test;
 

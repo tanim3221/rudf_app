@@ -69,12 +69,36 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="foregroundText">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="ffffff" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundTextAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="fontFamily" value="Anton" />
+                                                <entry key="text" value="AIS" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
+                                      <entry key="backgroundColor" value="00056c" />
+                                      <entry key="foregroundAssetType" value="TEXT" />
                                       <entry key="foregroundImage" value="C:\Users\SAKLAYEN TANIM\Downloads\friendship.svg" />
                                     </map>
                                   </option>

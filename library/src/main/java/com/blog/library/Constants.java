@@ -16,5 +16,5 @@ class Constants {
 
     static final String TAG = "UpdateChecker";
     // app JSON link and apk link set on JSON file.
-    static final String UPDATE_URL = "https://raw.githubusercontent.com/tanim3221/AISFamilyDatabase/master/update/update.json";
+    static final String UPDATE_URL = "https://raw.githubusercontent.com/tanim3221/AISDB/master/update/update.json";
 }
