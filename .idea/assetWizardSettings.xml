@@ -189,7 +189,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/SOFTWARES/AndroidStudio/android-studio-ide-182.5314842-windows/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_info_outline_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/SOFTWARES/AndroidStudio/android-studio-ide-182.5314842-windows/android-studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/cloud_off/baseline_cloud_off_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -199,9 +199,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="assetSourceType" value="FILE" />
-                            <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_cover_1" />
+                            <entry key="color" value="00056c" />
+                            <entry key="outputName" value="ic_cloud_off_black_24dp" />
                             <entry key="sourceFile" value="C:\Users\SAKLAYEN TANIM\Desktop\cover1.svg" />
                           </map>
                         </option>

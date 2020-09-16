@@ -6,7 +6,7 @@
     <string name="not_fb"> Facebook app not installed </string>
     <string name="connect_net"> Network Disconnected </string>
     <string name="fb_pro"> Turn on mobile data or Wi-Fi to access the Facebook profile. </string>
-    <string name="error_net"> Turn on mobile data or Wi-Fi to access AIS Family Database. </string>
+    <string name="error_net"> Turn on mobile data or Wi-Fi to visit AIS Family Database. </string>
     <string name="email_dialog"> Turn on mobile data or Wi-Fi for e-mail. </string>
     <string name="rudf_title">AIS FAMILY</string>
     <string name="msg_feedback">Dear Developer,\n\n\n\n\n\n\n Best regards,</string>
@@ -20,8 +20,13 @@
     <string name="app_about_details">This Android app contains phone numbers, blood groups, batch and email addresses of students of AIS FAMILY, Anyone can find contacts of a person by searching or by navigating through the listings and can call or email him/her directly from this app. If any new or updated information is available, update notification will automatically be showed when the phone is connected to the Internet.\n\nPlease share your comments or suggestions to improve this app further.</string>
     <string name="initiative_app">An Initiative by AIS FAMILY</string>
     <string name="about_dev">Saklayen Ahmed\nDepartment of Accounting and Information Systems\nUniversity of Rajshshi.</string>
-    <string name="dev_email">Email\naisfamilyru@gmail.com</string>
+    <string name="dev_email">Email: aisfamilyru@gmail.com</string>
     <string name="dev_title">Developer</string>
     <string name="welcome_to_ais_contact">Welcome to AIS FAMILY</string>
-
+    <string name="Error">TODO</string>
+    <string name="ohh">Ohh!</string>
+    <string name="reload">RELOAD</string>
+    <string name="todo_error">error</string>
+    <string name="error_text">Internet Disconnected</string>
+    <string name="close">Close</string>
 </resources>

@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -43,18 +44,12 @@ public class WebActivity extends AppCompatActivity  {
 
     protected AgentWeb mAgentWeb;
     private LinearLayout mLinearLayout;
-    private AlertDialog mAlertDialog;
-    private WebView webView;
-    private SmartRefreshLayout mSmartRefreshLayout;
-    private SwipeRefreshLayout swipeRefreshLayout;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         mLinearLayout = (LinearLayout) this.findViewById(R.id.container);
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -64,19 +59,18 @@ public class WebActivity extends AppCompatActivity  {
 
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(mLinearLayout, new LinearLayout.LayoutParams(-1, -1))
-                .setCustomIndicator(new CoolIndicatorLayout(this))
+                .useDefaultIndicator(R.color.colorProgressGradientEnd)
                 .setWebChromeClient(mWebChromeClient)
                 .setWebViewClient(mWebViewClient)
-                .setMainFrameErrorView(R.layout.agentweb_error_page, -1)
+                .setMainFrameErrorView(R.layout.error_page, -1)
                 .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
                 .setWebLayout(new SmartRefreshWebLayout(this))
                 //.setWebLayout(new WebLayout(this))
-                .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.ASK)
+                .setOpenOtherPageWays(DefaultWebClient.OpenOtherPageWays.DISALLOW)
                 .interceptUnkownUrl()
                 .createAgentWeb()
                 .ready()
                 .go(getUrl());
-        AgentWebConfig.syncCookie(getUrl(),"ais2020");
         mAgentWeb.getUrlLoader().loadUrl(getUrl());
 
     }
@@ -89,14 +83,20 @@ public class WebActivity extends AppCompatActivity  {
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
             //do you  work
-            Log.i("Info", "WebActivity onPageStarted");
+            //Log.i("Info", "WebActivity onPageStarted");
+        }
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
         }
     };
     private com.just.agentweb.WebChromeClient mWebChromeClient = new WebChromeClient() {
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
+
 
         }
     };
