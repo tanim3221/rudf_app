@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AISDB.iml" filepath="$PROJECT_DIR$/AISDB.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AISDB.iml" filepath="$PROJECT_DIR$/AISDB.iml" group="AISDB" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AISDB-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AISDB-app.iml" group="AISDB/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/AISDB-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/AISDB-library.iml" group="AISDB/library" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
