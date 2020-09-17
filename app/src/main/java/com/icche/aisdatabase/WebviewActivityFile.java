@@ -258,7 +258,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                 @Override
                 @TargetApi(Build.VERSION_CODES.M)
                 public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                   webView.loadUrl("about:blank");
+                    webView.loadUrl("about:blank");
                     if (!isNetworkStatusAvialable(getApplicationContext())) {
                         showError();
                     }
@@ -266,7 +266,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                 }
 
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                     if (url.startsWith("tel:")) {
+                    if (url.startsWith("tel:")) {
                         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
                         startActivity(intent);
 
@@ -296,23 +296,23 @@ public class WebviewActivityFile extends AppCompatActivity {
                         }
                         return true;
                     } else if (url.startsWith("https://web.facebook.com") || url.startsWith("https://www.facebook.com") || url.startsWith("https://m.me") || url.startsWith("https://facebook.com") || url.startsWith("https://m.facebook.com") || url.startsWith("https://mobile.facebook.com") || url.startsWith("fb:")) {
-                         String urlReplace = url;
-                         String url_view;
-                         urlReplace = urlReplace.replaceAll("https://facebook.com/|https://m.facebook.com/|https://www.facebook.com/|https://mobile.facebook.com/|https://www.facebook.com/profile.php?id=|https://m.facebook.com/profile.php?id=|https://web.facebook.com/profile.php?id=|https://web.facebook.com/|https://m.me/", "");
+                        String urlReplace = url;
+                        String url_view;
+                        urlReplace = urlReplace.replaceAll("https://facebook.com/|https://m.facebook.com/|https://www.facebook.com/|https://mobile.facebook.com/|https://www.facebook.com/profile.php?id=|https://m.facebook.com/profile.php?id=|https://web.facebook.com/profile.php?id=|https://web.facebook.com/|https://m.me/", "");
 
-                         if (url.startsWith("https://m.me")) {
-                             url_view = "https://m.me/"+urlReplace;
-                         } else {
-                             url_view = "fb://facewebmodal/f?href=https://www.facebook.com/"+urlReplace;
-                         }
+                        if (url.startsWith("https://m.me")) {
+                            url_view = "https://m.me/" + urlReplace;
+                        } else {
+                            url_view = "fb://facewebmodal/f?href=https://www.facebook.com/" + urlReplace;
+                        }
 
-                         if (isNetworkStatusAvialable(getApplicationContext())) {
-                            if (isAppInstalled(liContext, "com.facebook.lite") || isAppInstalled(liContext, "com.facebook.mlite")  || isAppInstalled(liContext, "com.facebook.orca") || isAppInstalled(liContext, "com.facebook.katana")
+                        if (isNetworkStatusAvialable(getApplicationContext())) {
+                            if (isAppInstalled(liContext, "com.facebook.lite") || isAppInstalled(liContext, "com.facebook.mlite") || isAppInstalled(liContext, "com.facebook.orca") || isAppInstalled(liContext, "com.facebook.katana")
                                     || isAppInstalled(liContext, "com.example.facebook") || isAppInstalled(liContext, "com.facebook.android")) {
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url_view));
                                 startActivity(intent);
-                                Toast.makeText(getApplicationContext(), (getString(R.string.facebook_view)),Toast.LENGTH_LONG).show();
-                               // Toast.makeText(getApplicationContext(), (url_view),Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), (getString(R.string.facebook_view)), Toast.LENGTH_LONG).show();
+                                // Toast.makeText(getApplicationContext(), (url_view),Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(getApplicationContext(), (getString(R.string.not_fb)),
                                         Toast.LENGTH_LONG).show();
@@ -374,6 +374,13 @@ public class WebviewActivityFile extends AppCompatActivity {
             showError();
         }
 
+     /*
+     // This script added below
+     // ATTENTION: This was auto-generated to handle app links.
+        Intent appLinkIntent = getIntent();
+        String appLinkAction = appLinkIntent.getAction();
+        Uri appLinkData = appLinkIntent.getData();
+        */
     }
 
     private  void showError() {
