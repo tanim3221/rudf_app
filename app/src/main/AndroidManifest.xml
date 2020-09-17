@@ -20,9 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.icche.aisdatabase.WebviewActivity">
-
-        </activity>
+        <activity android:name="com.icche.aisdatabase.WebviewActivity"></activity>
+        <activity android:name="com.icche.aisdatabase.WebviewActivityFile"></activity>
         <activity
             android:name="com.icche.aisdatabase.WebActivity"
             android:hardwareAccelerated="true"
