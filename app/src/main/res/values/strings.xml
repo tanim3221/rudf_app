@@ -29,4 +29,13 @@
     <string name="todo_error">error</string>
     <string name="error_text">Internet Disconnected</string>
     <string name="close">Close</string>
+    <string name="download_file_title">Download File</string>
+    <string name="download">"Downloading "</string>
+    <string name="later_btn">No</string>
+    <string name="download_file_btn">Yes</string>
+    <string name="save_images">Wait a minute. Image downloading...</string>
+    <string name="save_img_title">Save image</string>
+    <string name="dismiss_snackbar">Dismiss</string>
+    <string name="not_save_images">Something went wrong. Please try again later.</string>
+    <string name="do_download">Do you want to download?</string>
 </resources>

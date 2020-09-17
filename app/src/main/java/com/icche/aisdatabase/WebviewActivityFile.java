@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
@@ -41,9 +42,11 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -52,6 +55,10 @@ import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.blog.library.UpdateChecker;
+import com.github.angads25.filepicker.controller.DialogSelectionListener;
+import com.github.angads25.filepicker.model.DialogConfigs;
+import com.github.angads25.filepicker.model.DialogProperties;
+import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -60,10 +67,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class WebviewActivity extends AppCompatActivity {
+public class WebviewActivityFile extends AppCompatActivity {
 
     private static final int INPUT_FILE_REQUEST_CODE = 1;
-    private static final String TAG = WebviewActivity.class.getSimpleName();
+    private static final String TAG = WebviewActivityFile.class.getSimpleName();
     private WebSettings webSettings;
     private ValueCallback<Uri[]> mUploadMessage;
     private String mCameraPhotoPath = null;
@@ -71,6 +78,9 @@ public class WebviewActivity extends AppCompatActivity {
     private WebView webView = null;
     private SwipeRefreshLayout swipeRefreshLayout;
     private Context liContext = null;
+    private FilePickerDialog dialog;
+    private String LOG_TAG = "DREG";
+    private Uri[] results;
 
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -190,7 +200,7 @@ public class WebviewActivity extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    UpdateChecker.checkForDialog(WebviewActivity.this);
+                    UpdateChecker.checkForDialog(WebviewActivityFile.this);
                 }
             }, 1);
 
@@ -223,6 +233,7 @@ public class WebviewActivity extends AppCompatActivity {
 
             });
             webView.setWebChromeClient(new PQChromeClient());
+            webView.setWebChromeClient(new FileChromeClient());
             //if SDK version is greater of 19 then activate hardware acceleration otherwise activate software acceleration
             if (Build.VERSION.SDK_INT >= 19) {
                 webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
@@ -238,13 +249,19 @@ public class WebviewActivity extends AppCompatActivity {
                 public void onReceivedError(WebView view, int errorCode, String description,
                                             String failingUrl) {
                     webView.loadUrl("about:blank");
+                    if (!isNetworkStatusAvialable(getApplicationContext())) {
+                        showError();
+                    }
                     super.onReceivedError(view, errorCode, description, failingUrl);
                 }
 
                 @Override
                 @TargetApi(Build.VERSION_CODES.M)
                 public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                    webView.loadUrl("about:blank");
+                   webView.loadUrl("about:blank");
+                    if (!isNetworkStatusAvialable(getApplicationContext())) {
+                        showError();
+                    }
                     super.onReceivedError(view, request, error);
                 }
 
@@ -270,7 +287,7 @@ public class WebviewActivity extends AppCompatActivity {
                             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
                             SpannableStringBuilder color = new SpannableStringBuilder(titleText);
                             color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
                             builder.setTitle(getString(R.string.connect_net))
                                     .setMessage(color)
                                     /*   .setNegativeButton(getString(R.string.ok_btn), null)*/
@@ -306,7 +323,7 @@ public class WebviewActivity extends AppCompatActivity {
                             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
                             SpannableStringBuilder color = new SpannableStringBuilder(titleText);
                             color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivity.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
                             builder.setTitle(getString(R.string.connect_net))
                                     .setMessage(color)
                                     /*  .setNegativeButton(getString(R.string.ok_btn), null)*/
@@ -342,7 +359,7 @@ public class WebviewActivity extends AppCompatActivity {
 
                         } else {
 
-                            ActivityCompat.requestPermissions(WebviewActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                            ActivityCompat.requestPermissions(WebviewActivityFile.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                         }
                     } else {
 
@@ -354,34 +371,146 @@ public class WebviewActivity extends AppCompatActivity {
             manageIntent(getIntent());
 
         } else {
-            String titleText = getString(R.string.error_net);
-            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
-            SpannableStringBuilder color = new SpannableStringBuilder(titleText);
-            color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivity.this);
-            builder.setTitle(getString(R.string.connect_net))
-                    .setMessage(color)
-                    .setIcon(getResources().getDrawable(R.drawable.ic_wifi_off))
-                    .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int i) {
-                            onBackPressed();
-                        }
-                    })
-                    .setPositiveButton(getString(R.string.retry_btn), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                            startActivity(getIntent());
-                        }
-                    })
-                    .setCancelable(false)
-                    .show();
+            showError();
         }
 
     }
 
+    private  void showError() {
+        String titleText = getString(R.string.error_net);
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
+        SpannableStringBuilder color = new SpannableStringBuilder(titleText);
+        color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
+        //builder.setTitle(getString(R.string.connect_net))
+        builder.setMessage(color)
+                //.setIcon(getResources().getDrawable(R.drawable.ic_wifi_off))
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                       /*--------
+                        onBackPressed();
+                        /*-------
+                        finish();
+                        System.exit(0);
+                        */
+                        int pid = android.os.Process.myPid();
+                        android.os.Process.killProcess(pid);
 
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        startActivity(intent);
+                    }
+                })
+                .setPositiveButton(getString(R.string.retry_btn), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        startActivity(getIntent());
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+    private void openFileSelectionDialog() {
+
+        if (null != dialog && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+
+        //Create a DialogProperties object.
+        final DialogProperties properties = new DialogProperties();
+
+        //Instantiate FilePickerDialog with Context and DialogProperties.
+        dialog = new FilePickerDialog(WebviewActivityFile.this, properties);
+        dialog.setTitle("Choose a File");
+        dialog.setPositiveBtnName("Choose");
+        dialog.setNegativeBtnName("Cancel");
+        //properties.selection_mode = DialogConfigs.MULTI_MODE; // for multiple files
+        properties.selection_mode = DialogConfigs.SINGLE_MODE; // for single file
+        properties.selection_type = DialogConfigs.FILE_SELECT;
+
+        //Method handle selected files.
+        dialog.setDialogSelectionListener(new DialogSelectionListener() {
+            @Override
+            public void onSelectedFilePaths(String[] files) {
+                results = new Uri[files.length];
+                for (int i = 0; i < files.length; i++) {
+                    String filePath = new File(files[i]).getAbsolutePath();
+                    if (!filePath.startsWith("file://")) {
+                        filePath = "file://" + filePath;
+                    }
+                    results[i] = Uri.parse(filePath);
+                    Log.d(LOG_TAG, "file path: " + filePath);
+                    Log.d(LOG_TAG, "file uri: " + String.valueOf(results[i]));
+                }
+                mUploadMessage.onReceiveValue(results);
+                mUploadMessage = null;
+            }
+        });
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                if (null != mUploadMessage) {
+                    if (null != results && results.length >= 1) {
+                        mUploadMessage.onReceiveValue(results);
+                    } else {
+                        mUploadMessage.onReceiveValue(null);
+                    }
+                }
+                mUploadMessage = null;
+            }
+        });
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                if (null != mUploadMessage) {
+                    if (null != results && results.length >= 1) {
+                        mUploadMessage.onReceiveValue(results);
+                    } else {
+                        mUploadMessage.onReceiveValue(null);
+                    }
+                }
+                mUploadMessage = null;
+            }
+        });
+
+        dialog.show();
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+    }
+    public class FileChromeClient extends WebChromeClient {
+
+        @Override
+        public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+            // Double check that we don't have any existing callbacks
+            if (mUploadMessage != null) {
+                mUploadMessage.onReceiveValue(null);
+            }
+            mUploadMessage = filePathCallback;
+
+            openFileSelectionDialog();
+
+            return true;
+        }
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (dialog != null) {
+                        openFileSelectionDialog();
+                    }
+                } else {
+                    //Permission has not been granted. Notify the user.
+                    Toast.makeText(WebviewActivityFile.this, "Permission is Required for getting list of files", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
     @Override
     public void onCreateContextMenu(ContextMenu contextMenu, final View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
         super.onCreateContextMenu(contextMenu, view, contextMenuInfo);
@@ -437,7 +566,7 @@ public class WebviewActivity extends AppCompatActivity {
                 }
 
             } else {
-                ActivityCompat.requestPermissions(WebviewActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(WebviewActivityFile.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
         } else {
             if (hitTestResult.getType() == WebView.HitTestResult.IMAGE_TYPE || hitTestResult.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
@@ -468,7 +597,7 @@ public class WebviewActivity extends AppCompatActivity {
                             }
                         });
             } else {
-                ActivityCompat.requestPermissions(WebviewActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(WebviewActivityFile.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
 
         }
@@ -545,12 +674,11 @@ public class WebviewActivity extends AppCompatActivity {
                     takePictureIntent = null;
                 }
             }
-           // String[] mimetypes = {"image/*", "application/*|text/*"};
+
             Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
             contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
             contentSelectionIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
            contentSelectionIntent.setType("image/*|application/pdf|doc|ppt|xlxs|docx/*");
-            //contentSelectionIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
 
             Intent[] intentArray;
             if (takePictureIntent != null) {
@@ -594,10 +722,10 @@ public class WebviewActivity extends AppCompatActivity {
 
         final String filename = URLUtil.guessFileName(url, contentDisposition, mimetype);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
        // builder.setIcon(getResources().getDrawable(R.drawable.ic_file_download));
         //builder.setTitle(getString(R.string.download_file_title));
-        builder.setTitle("Do you want to download?");
+        builder.setTitle(R.string.do_download);
         builder.setMessage(filename);
         builder.setCancelable(false);
         builder.setPositiveButton(getString(R.string.download_file_btn), new DialogInterface.OnClickListener() {
