@@ -341,10 +341,23 @@ public class WebviewActivityFile extends AppCompatActivity {
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
                     swipeRefreshLayout.setRefreshing(true);
+                    webView.loadUrl("javascript:(function() { " +
+                            "document.getElementsByClassName('wrong_info_report_card')[0].style.display='none'; })()");
+                    webView.loadUrl("javascript:(function() { " +
+                            "document.getElementsByClassName('mobile_button_down_app')[0].style.display='none'; })()");
+
                 }
 
                 public void onPageFinished(WebView view, String url) {
                     swipeRefreshLayout.setRefreshing(false);
+                    // hide element by class name
+                    webView.loadUrl("javascript:(function() { " +
+                            "document.getElementsByClassName('wrong_info_report_card')[0].style.display='none'; })()");
+                    webView.loadUrl("javascript:(function() { " +
+                            "document.getElementsByClassName('mobile_button_down_app')[0].style.display='none'; })()");
+                    // hide element by id
+                    //webView.loadUrl("javascript:(function() { " +
+                            //"document.getElementById('your_id').style.display='none';})()");
                     super.onPageFinished(view, url);
                 }
             });

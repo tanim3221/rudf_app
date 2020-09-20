@@ -20,8 +20,8 @@ android {
         applicationId "com.icche.aisdatabase"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 6
-        versionName 'ais.family.17092020'
+        versionCode 7
+        versionName 'ais.family.20092020'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
 
@@ -38,7 +38,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':library')
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    //implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0-beta01'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
