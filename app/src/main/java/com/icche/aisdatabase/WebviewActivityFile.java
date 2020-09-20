@@ -241,7 +241,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                 webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             }
 
-            //  // webView.loadUrl("http://aisru.cf");
+            webView.loadUrl("http://aisru.cf");
 
             webView.setWebViewClient(new WebViewClient() {
 
@@ -357,7 +357,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                             "document.getElementsByClassName('mobile_button_down_app')[0].style.display='none'; })()");
                     // hide element by id
                     //webView.loadUrl("javascript:(function() { " +
-                            //"document.getElementById('your_id').style.display='none';})()");
+                    //"document.getElementById('your_id').style.display='none';})()");
                     super.onPageFinished(view, url);
                 }
             });
@@ -381,7 +381,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                     }
                 }
             });
-            manageIntent(getIntent());
+            //manageIntent(getIntent());
 
         } else {
             showError();
@@ -607,7 +607,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                                     request.allowScanningByMediaScanner();
                                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                                     DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                                    request.setDestinationInExternalPublicDir("/AIS Family/photos", filename);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, filename);
                                     downloadManager.enqueue(request);
                                     Snackbar snackbar = Snackbar.make(view, getString(R.string.save_images), Snackbar.LENGTH_LONG);
                                     snackbar.show();
@@ -623,32 +623,33 @@ public class WebviewActivityFile extends AppCompatActivity {
         }
     }
 
-    public void manageIntent(Intent intent) {
-        // ATTENTION: This was auto-generated to handle app links.
-        Intent appLinkIntent = intent;
-        String appLinkAction = appLinkIntent.getAction();
-        Uri appLinkData = appLinkIntent.getData();
+    /*
+        public void manageIntent(Intent intent) {
+            // ATTENTION: This was auto-generated to handle app links.
+            Intent appLinkIntent = intent;
+            String appLinkAction = appLinkIntent.getAction();
+            Uri appLinkData = appLinkIntent.getData();
 
-        if (getIntent().getExtras() != null) {
-            if (appLinkData == null){
+            if (getIntent().getExtras() != null) {
+                if (appLinkData == null){
+                    webView.loadUrl("http://aisru.cf");
+                }else
+                    webView.loadUrl(String.valueOf(appLinkData));
+
+            } else if (getIntent().getExtras() == null){
                 webView.loadUrl("http://aisru.cf");
-            }else
-                webView.loadUrl(String.valueOf(appLinkData));
 
-        } else if (getIntent().getExtras() == null){
-            webView.loadUrl("http://aisru.cf");
-
+            }
         }
-    }
 
-    // override to get the new intent when this activity has an instance already running
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        // again call the same method here with the new intent received
-        manageIntent(intent);
-    }
-
+        // override to get the new intent when this activity has an instance already running
+        @Override
+        protected void onNewIntent(Intent intent) {
+            super.onNewIntent(intent);
+            // again call the same method here with the new intent received
+            manageIntent(intent);
+        }
+    */
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -661,6 +662,70 @@ public class WebviewActivityFile extends AppCompatActivity {
                 storageDir      /* directory */
         );
         return imageFile;
+    }
+
+    public void download(final String url, final String userAgent, String contentDisposition, String mimetype) {
+
+
+        final String filename = URLUtil.guessFileName(url, contentDisposition, mimetype);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
+        // builder.setIcon(getResources().getDrawable(R.drawable.ic_file_download));
+        //builder.setTitle(getString(R.string.download_file_title));
+        builder.setTitle(R.string.do_download);
+        builder.setMessage(filename);
+        builder.setCancelable(false);
+        builder.setPositiveButton(getString(R.string.download_file_btn), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                String cookie = CookieManager.getInstance().getCookie(url);
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.addRequestHeader("Cookie", cookie);
+                request.addRequestHeader("User-Agent", userAgent);
+                request.allowScanningByMediaScanner();
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOCUMENTS, filename);
+                downloadManager.enqueue(request);
+
+                String download = getString(R.string.download) + filename;
+                Toast toast = Toast.makeText(getApplicationContext(), download, Toast.LENGTH_LONG);
+                toast.show();
+                webView.goBack();
+
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.later_btn), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                webView.goBack();
+            }
+
+        });
+        builder.create().show();
+
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+            webView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (this.webView.canGoBack()) {
+            this.webView.goBack();
+            return;
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public class PQChromeClient extends WebChromeClient {
@@ -698,7 +763,7 @@ public class WebviewActivityFile extends AppCompatActivity {
             Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
             contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
             contentSelectionIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-           contentSelectionIntent.setType("image/*|application/pdf|doc|ppt|xlxs|docx/*");
+            contentSelectionIntent.setType("image/*|application/pdf|doc|ppt|xlxs|docx/*");
 
             Intent[] intentArray;
             if (takePictureIntent != null) {
@@ -716,71 +781,6 @@ public class WebviewActivityFile extends AppCompatActivity {
             return true;
 
         }
-    }
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
-            webView.goBack();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (this.webView.canGoBack()) {
-            this.webView.goBack();
-            return;
-        }
-        else {
-            super.onBackPressed();
-        }
-    }
-
-    public void download(final String url, final String userAgent, String contentDisposition, String mimetype) {
-
-
-        final String filename = URLUtil.guessFileName(url, contentDisposition, mimetype);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
-       // builder.setIcon(getResources().getDrawable(R.drawable.ic_file_download));
-        //builder.setTitle(getString(R.string.download_file_title));
-        builder.setTitle(R.string.do_download);
-        builder.setMessage(filename);
-        builder.setCancelable(false);
-        builder.setPositiveButton(getString(R.string.download_file_btn), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-                String cookie = CookieManager.getInstance().getCookie(url);
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.addRequestHeader("Cookie", cookie);
-                request.addRequestHeader("User-Agent", userAgent);
-                request.allowScanningByMediaScanner();
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                request.setDestinationInExternalPublicDir("/AIS Family/files", filename);
-                downloadManager.enqueue(request);
-
-                String download = getString(R.string.download) + filename;
-                Toast toast = Toast.makeText(getApplicationContext(), download, Toast.LENGTH_LONG);
-                toast.show();
-                webView.goBack();
-
-            }
-        });
-
-        builder.setNegativeButton(getString(R.string.later_btn), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                webView.goBack();
-            }
-
-        });
-        builder.create().show();
-
     }
 
 }

@@ -22,14 +22,6 @@
     <string name="about_dev">Saklayen Ahmed\nDepartment of Accounting and Information Systems\nUniversity of Rajshshi.</string>
     <string name="dev_email">Email: aisfamilyru@gmail.com</string>
     <string name="dev_title">Developer</string>
-    <string name="welcome_to_ais_contact">Welcome to AIS FAMILY</string>
-    <string name="Error">TODO</string>
-    <string name="ohh">Ohh!</string>
-    <string name="reload">RELOAD</string>
-    <string name="todo_error">error</string>
-    <string name="error_text">Internet Disconnected</string>
-    <string name="close">Close</string>
-    <string name="download_file_title">Download File</string>
     <string name="download">"Downloading "</string>
     <string name="later_btn">No</string>
     <string name="download_file_btn">Yes</string>
