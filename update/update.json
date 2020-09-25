@@ -1,5 +1,5 @@
 {
   "url": "https://github.com/tanim3221/ais_family_app/raw/master/app/release/app-release.apk",
-  "versionCode": 9,
-  "updateMessage": "What's new***\n\n- Some bug fix."
+  "versionCode": 10,
+  "updateMessage": "What's new***\n\n- Refresh & scrolling conflict fix.\n- Files view back button fix.\n- Other minor bug fix."
 }

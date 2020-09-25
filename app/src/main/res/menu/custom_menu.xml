@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single" />
+
+    <item
+        android:id="@+id/nav_refresh"
+        android:icon="@drawable/ic_baseline_refresh_24"
+        android:title="Refresh" />
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/nav_feedback"
+        android:icon="@drawable/ic_baseline_feedback_24"
+        android:title="Feedback" />
+
+    <item
+        android:id="@+id/nav_update"
+        android:icon="@drawable/ic_baseline_cloud_download_24"
+        android:title="Check New Update" />
+
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/ic_baseline_info_24"
+        android:title="About" />
+
+    <item
+        android:id="@+id/nav_exit"
+        android:icon="@drawable/exit_to_app"
+        android:title="Exit" />
+
+
+</menu>

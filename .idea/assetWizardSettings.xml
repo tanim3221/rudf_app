@@ -346,7 +346,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/SOFTWARES/AndroidStudio/android-studio-ide-182.5314842-windows/android-studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/cloud_download/baseline_cloud_download_24.xml" />
+                                      <entry key="url" value="jar:file:/E:/SOFTWARES/AndroidStudio/android-studio-ide-182.5314842-windows/android-studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/info/baseline_info_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -356,8 +356,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="00056c" />
-                            <entry key="outputName" value="ic_file_download" />
+                            <entry key="outputName" value="ic_baseline_info_24" />
                             <entry key="sourceFile" value="C:\Users\SAKLAYEN TANIM\Desktop\cover1.svg" />
                           </map>
                         </option>

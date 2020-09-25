@@ -69,7 +69,7 @@ public class WebviewActivity extends AppCompatActivity {
     private String mCameraPhotoPath = null;
     private long size = 0;
     private WebView webView = null;
-    private SwipeRefreshLayout swipeRefreshLayout;
+   /* private SwipeRefreshLayout swipeRefreshLayout;*/
     private Context liContext = null;
 
     // Storage Permissions variables
@@ -178,7 +178,8 @@ public class WebviewActivity extends AppCompatActivity {
             verifyStoragePermissions(this);
             liContext = this.getApplicationContext();
             FrameLayout frameLayout = findViewById(R.id.layout);
-            final SwipeRefreshLayout swipeRefreshLayout = frameLayout.findViewById(R.id.swipe);
+           /*
+           final SwipeRefreshLayout swipeRefreshLayout = frameLayout.findViewById(R.id.swipe);
             swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
             swipeRefreshLayout.setRefreshing(true);
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -187,6 +188,8 @@ public class WebviewActivity extends AppCompatActivity {
                     webView.reload();
                 }
             });
+            */
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -323,11 +326,11 @@ public class WebviewActivity extends AppCompatActivity {
 
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
-                    swipeRefreshLayout.setRefreshing(true);
+                    /*swipeRefreshLayout.setRefreshing(true);*/
                 }
 
                 public void onPageFinished(WebView view, String url) {
-                    swipeRefreshLayout.setRefreshing(false);
+                    /*swipeRefreshLayout.setRefreshing(false);*/
                     super.onPageFinished(view, url);
                 }
             });

@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#08003c</color>
     <color name="colorAccent">#08003c</color>
     <color name="progressBar">#BDBDBD</color>
+    <color name="webcolor">#130677</color>
 
 </resources>

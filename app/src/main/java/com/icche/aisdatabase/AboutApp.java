@@ -1,6 +1,7 @@
 package com.icche.aisdatabase;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -22,9 +23,10 @@ public class AboutApp extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setType("text/email");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {getString(R.string.feedbackMail)});
+                intent.setData(Uri.parse("mailto:"));
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.feedbackMail)});
                 intent.putExtra(Intent.EXTRA_SUBJECT, (getString(R.string.feedbacksub)));
                 intent.putExtra(Intent.EXTRA_TEXT,(getString(R.string.msg_feedback)));
                 startActivity(Intent.createChooser(intent, (getString(R.string.feedTitle))));

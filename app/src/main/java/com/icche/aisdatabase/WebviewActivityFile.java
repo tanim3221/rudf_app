@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -44,6 +46,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -52,6 +56,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.blog.library.UpdateChecker;
@@ -59,10 +64,14 @@ import com.github.angads25.filepicker.controller.DialogSelectionListener;
 import com.github.angads25.filepicker.model.DialogConfigs;
 import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.view.FilePickerDialog;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -76,11 +85,14 @@ public class WebviewActivityFile extends AppCompatActivity {
     private String mCameraPhotoPath = null;
     private long size = 0;
     private WebView webView = null;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    /* private SwipeRefreshLayout swipeRefreshLayout;*/
     private Context liContext = null;
     private FilePickerDialog dialog;
     private String LOG_TAG = "DREG";
     private Uri[] results;
+    private FloatingActionButton floatingActionButton;
+    String load_url = "http://aisru.cf";
+    private ProgressBar progressBar;
 
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -188,30 +200,134 @@ public class WebviewActivityFile extends AppCompatActivity {
             verifyStoragePermissions(this);
             liContext = this.getApplicationContext();
             FrameLayout frameLayout = findViewById(R.id.layout);
+            final FloatingActionButton floatingActionButton = findViewById(R.id.fab);
+            final ProgressBar progressBar = findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                Drawable wrapDrawable = DrawableCompat.wrap(progressBar.getIndeterminateDrawable());
+                DrawableCompat.setTint(wrapDrawable, ContextCompat.getColor(getApplicationContext(),
+                        R.color.webcolor));
+                progressBar.setIndeterminateDrawable(DrawableCompat.unwrap(wrapDrawable));
+
+            } else {
+                progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.webcolor), PorterDuff.Mode.SRC_IN);
+            }
+
+           /*
             final SwipeRefreshLayout swipeRefreshLayout = frameLayout.findViewById(R.id.swipe);
             swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
             swipeRefreshLayout.setRefreshing(true);
-            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            swipeRefreshLayout.setEnabled(false);
+
+           swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
                     webView.reload();
                 }
             });
+            */
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     UpdateChecker.checkForDialog(WebviewActivityFile.this);
                 }
             }, 1);
+            /*
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    BottomSheetDialog dialog = new BottomSheetDialog(WebviewActivityFile.this);
+                    dialog.setContentView(R.layout.custom_bottom);
+                    dialog.show();
+                }
+            });
+            */
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(WebviewActivityFile.this, floatingActionButton);
+
+                    try {
+                        Field[] fields = popupMenu.getClass().getDeclaredFields();
+                        for (Field field : fields) {
+                            if ("mPopup".equals(field.getName())) {
+                                field.setAccessible(true);
+                                Object menuPopoupHelper = field.get(popupMenu);
+                                Class<?> classPopupHelper = Class.forName(menuPopoupHelper.getClass().getName());
+                                Method setForceIcon = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
+                                setForceIcon.invoke(menuPopoupHelper, true);
+                                break;
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    popupMenu.getMenuInflater().inflate(R.menu.custom_menu, popupMenu.getMenu());
+
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+
+                                case R.id.nav_exit:
+                                    int pid = android.os.Process.myPid();
+                                    android.os.Process.killProcess(pid);
+
+                                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                                    intent.addCategory(Intent.CATEGORY_HOME);
+                                    startActivity(intent);
+                                    break;
+
+                                case R.id.nav_feedback:
+                                    Intent feedback = new Intent(Intent.ACTION_SENDTO);
+                                    feedback.setType("text/email");
+                                    feedback.setData(Uri.parse("mailto:"));
+                                    feedback.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.feedbackMail)});
+                                    feedback.putExtra(Intent.EXTRA_SUBJECT, (getString(R.string.feedbacksub)));
+                                    feedback.putExtra(Intent.EXTRA_TEXT, (getString(R.string.msg_feedback)));
+                                    startActivity(Intent.createChooser(feedback, (getString(R.string.feedTitle))));
+                                    break;
+
+                                case R.id.nav_about:
+                                    Intent about = new Intent(WebviewActivityFile.this, AboutApp.class);
+                                    startActivity(about);
+                                    break;
+
+                                case R.id.nav_home:
+                                    webView.loadUrl(load_url);
+                                    break;
+
+                                case R.id.nav_refresh:
+                                    webView.reload();
+                                    break;
+
+                                case R.id.nav_update:
+                                    UpdateChecker.checkForDialog(WebviewActivityFile.this);
+                                    break;
+
+                            }
+                            return true;
+
+                        }
+                    });
+                    popupMenu.show();
+                }
+            });
 
             webView = (WebView) findViewById(R.id.webView);
-            WebSettings webSettings = webView.getSettings();
+            final WebSettings webSettings = webView.getSettings();
             webView.getSettings().setSupportZoom(false);
             webView.getSettings().setBuiltInZoomControls(false);
             webView.getSettings().setDisplayZoomControls(false);
             webView.getSettings().setLoadWithOverviewMode(true);
             webView.getSettings().setUseWideViewPort(true);
             webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setSaveFormData(true);
+            webView.getSettings().setSavePassword(true);
+            webView.getSettings().setDomStorageEnabled(true);
             webView.getSettings().setAppCacheMaxSize(10 * 1024 * 1024);
             webView.getSettings().setAppCachePath(getApplicationContext().getCacheDir().getAbsolutePath());
             webView.getSettings().setAllowFileAccess(true);
@@ -241,7 +357,20 @@ public class WebviewActivityFile extends AppCompatActivity {
                 webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             }
 
-            webView.loadUrl("http://aisru.cf");
+            webView.loadUrl(load_url);
+/*
+            webView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                @Override
+                public void onScrollChanged() {
+                    Log.v(TAG, "+++ scrollchanged "+webView.getScrollY());
+                    if (webView.getScrollY()==0){
+                        swipeRefreshLayout.setEnabled(true);
+                    } else {
+                        swipeRefreshLayout.setEnabled(false);
+                    }
+                }
+            });
+*/
 
             webView.setWebViewClient(new WebViewClient() {
 
@@ -340,7 +469,9 @@ public class WebviewActivityFile extends AppCompatActivity {
 
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
                     super.onPageStarted(view, url, favicon);
-                    swipeRefreshLayout.setRefreshing(true);
+                    progressBar.setVisibility(View.VISIBLE);
+
+                    /*swipeRefreshLayout.setRefreshing(true);*/
                     webView.loadUrl("javascript:(function() { " +
                             "document.getElementsByClassName('wrong_info_report_card')[0].style.display='none'; })()");
                     webView.loadUrl("javascript:(function() { " +
@@ -349,7 +480,8 @@ public class WebviewActivityFile extends AppCompatActivity {
                 }
 
                 public void onPageFinished(WebView view, String url) {
-                    swipeRefreshLayout.setRefreshing(false);
+                    /*  swipeRefreshLayout.setRefreshing(false);*/
+                    progressBar.setVisibility(View.GONE);
                     // hide element by class name
                     webView.loadUrl("javascript:(function() { " +
                             "document.getElementsByClassName('wrong_info_report_card')[0].style.display='none'; })()");
@@ -395,6 +527,7 @@ public class WebviewActivityFile extends AppCompatActivity {
         Uri appLinkData = appLinkIntent.getData();
         */
     }
+
 
     private  void showError() {
         String titleText = getString(R.string.error_net);

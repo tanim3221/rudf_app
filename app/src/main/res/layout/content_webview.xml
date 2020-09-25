@@ -11,17 +11,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        <WebView
+            android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/swipe">
+            android:layout_height="match_parent"></WebView>
 
-            <WebView
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></WebView>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_dashboard_24"
+            android:layout_gravity="bottom|start"
+            app:elevation="6dp"
+            android:backgroundTint="@color/webcolor"
+            android:background="@color/webcolor"
+            android:layout_margin="16dp"
+            app:backgroundTint="@color/webcolor"
+            app:pressedTranslationZ="12dp" />
     </FrameLayout>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/progressbar"
+        android:padding="15dp"
+        android:visibility="visible" />
 </RelativeLayout>

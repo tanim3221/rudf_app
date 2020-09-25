@@ -10,14 +10,14 @@
     <string name="email_dialog"> Turn on mobile data or Wi-Fi for e-mail. </string>
     <string name="rudf_title">AIS FAMILY</string>
     <string name="msg_feedback">Dear Developer,\n\n\n\n\n\n\n Best regards,</string>
-    <string name="feedbackMail">astanim.3221@gmail.com</string>
+    <string name="feedbackMail">astanim.3221@gmail.com, aisfamilyru@gmail.com</string>
     <string name="feedbacksub">AIS FAMILY Feedback</string>
     <string name="feedTitle">Feedback</string>
     <string name="cancel">Cancel</string>
     <string name="retry_btn">Retry</string>
 
 
-    <string name="app_about_details">This Android app contains phone numbers, blood groups, batch and email addresses of students of AIS FAMILY, Anyone can find contacts of a person by searching or by navigating through the listings and can call or email him/her directly from this app. If any new or updated information is available, update notification will automatically be showed when the phone is connected to the Internet.\n\nPlease share your comments or suggestions to improve this app further.</string>
+    <string name="app_about_details">This Android app contains phone numbers, blood groups, batches and email addresses of AIS family students, anyone can find or identify a person by searching or navigating through the list and call or email him/her directly from this app. If any new or updated information is available, the update notification will automatically appear when the phone is connected to the Internet.\n\nPlease share your feedback or suggestions to further improve this application.</string>
     <string name="initiative_app">An Initiative by AIS FAMILY</string>
     <string name="about_dev">Saklayen Ahmed\nDepartment of Accounting and Information Systems\nUniversity of Rajshshi.</string>
     <string name="dev_email">Email: aisfamilyru@gmail.com</string>

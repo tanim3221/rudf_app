@@ -27,10 +27,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="7dp"
                 android:text="@string/rudf_title"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/webcolor"
                 android:textSize="17dp"
                 android:textStyle="bold" />
 
@@ -58,7 +58,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/webcolor"
                 android:text="SEND FEEDBACK"
                 android:textColor="@android:color/white"
                 android:textSize="12dp" />
