@@ -92,6 +92,7 @@ public class WebviewActivityFile extends AppCompatActivity {
     private Uri[] results;
     private FloatingActionButton floatingActionButton;
     String load_url = "http://aisru.cf";
+    String load_url_s = "aisru.cf";
     private ProgressBar progressBar;
 
     // Storage Permissions variables
@@ -459,6 +460,12 @@ public class WebviewActivityFile extends AppCompatActivity {
                                     .setCancelable(true)
                                     .show();
                         }
+                        return true;
+                   // } else  if (!url.startsWith(load_url) || !url.contains(load_url_s) || !url.contains(load_url_w) || !url.contains(load_url_s_w)) {
+                    } else  if (!url.contains(load_url_s)) {
+                        //view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(i);
                         return true;
                     } else {
                         view.loadUrl(url);
