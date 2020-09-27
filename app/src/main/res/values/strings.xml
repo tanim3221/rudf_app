@@ -20,7 +20,7 @@
     <string name="app_about_details">This Android app contains phone numbers, blood groups, batches and email addresses of AIS family students, anyone can find or identify a person by searching or navigating through the list and call or email him/her directly from this app. If any new or updated information is available, the update notification will automatically appear when the phone is connected to the Internet.\n\nPlease share your feedback or suggestions to further improve this application.</string>
     <string name="initiative_app">An Initiative by AIS FAMILY</string>
     <string name="about_dev">Saklayen Ahmed\nDepartment of Accounting and Information Systems\nUniversity of Rajshshi.</string>
-    <string name="dev_email">Email: aisfamilyru@gmail.com</string>
+    <string name="dev_email">Email:\naisfamilyru@gmail.com</string>
     <string name="dev_title">Developer</string>
     <string name="download">"Downloading "</string>
     <string name="later_btn">No</string>

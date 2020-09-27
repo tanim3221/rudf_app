@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blog.library.AppUtils;
+
 public class AboutApp extends AppCompatActivity {
+    private TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +23,8 @@ public class AboutApp extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         setContentView(R.layout.activity_about_app);
+        TextView textView = findViewById(R.id.version);
+        textView.setText("Current version: " + AppUtils.getVersionName(this));
         Button button = findViewById(R.id.feedback);
         button.setOnClickListener(new View.OnClickListener() {
             @Override

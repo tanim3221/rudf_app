@@ -8,6 +8,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ais_family_app_private.iml" filepath="$PROJECT_DIR$/.idea/modules/ais_family_app_private.iml" group="ais_family_app_private" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ais_family_app_private-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ais_family_app_private-app.iml" group="ais_family_app_private/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ais_family_app_private-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ais_family_app_private-library.iml" group="ais_family_app_private/library" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ais_family_app_private_.iml" filepath="$PROJECT_DIR$/.idea/modules/ais_family_app_private_.iml" group="ais_family_app_private_" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ais_family_app_private_-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ais_family_app_private_-app.iml" group="ais_family_app_private_/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ais_family_app_private_-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ais_family_app_private_-library.iml" group="ais_family_app_private_/library" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
