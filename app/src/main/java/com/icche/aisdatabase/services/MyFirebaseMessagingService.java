@@ -13,7 +13,9 @@ import com.icche.aisdatabase.utils.NotificationUtils;
 import com.icche.aisdatabase.vo.NotificationVO;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -26,7 +28,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String DATA = "data";
     private static final String ACTION_DESTINATION = "action_destination";
 
+    SQLiteDatabase sqLiteDatabaseObj;
+    String SQLiteDataBaseQueryHolder;
 
+    @Override
+    public void onCreate() {
+        SQLiteDataBaseBuild();
+        SQLiteTableBuild();
+    }
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
@@ -60,6 +69,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
         notificationUtils.displayNotification(notificationVO, resultIntent);
         notificationUtils.playNotificationSound();
+
+        String date = DateFormat.getDateInstance(DateFormat.LONG).format(new Date());
+        String time = new SimpleDateFormat("hh:mm", Locale.getDefault()).format(new Date());
+        SQLiteDataBaseQueryHolder = "INSERT INTO aisTable (title,message, time) VALUES('" + title +
+                "', '" + message + "', '" +date+" "+time + "');";
+        sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder);
     }
 
     private void handleData(Map<String, String> data) {
@@ -84,5 +99,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationUtils.displayNotification(notificationVO, resultIntent);
         notificationUtils.playNotificationSound();
 
+        String date = DateFormat.getDateInstance(DateFormat.FULL).format(new Date());
+        String time = new SimpleDateFormat("hh:mm", Locale.getDefault()).format(new Date());
+        SQLiteDataBaseQueryHolder = "INSERT INTO aisTable (title,message, time) VALUES('" + title +
+                "', '" + message + "', '" + date+" "+time + "');";
+        sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder);
     }
+
+    public void SQLiteDataBaseBuild() {
+        sqLiteDatabaseObj = openOrCreateDatabase("ais", Context.MODE_PRIVATE, null);
+    }
+
+    public void SQLiteTableBuild() {
+        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS aisTable (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title VARCHAR, message VARCHAR, time VARCHAR);");
+    }
+
 }
