@@ -13,11 +13,20 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:minHeight="?attr/actionBarSize"
-        app:navigationIcon="@drawable/ic_baseline_close_24"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="AIS Notifications"
-        app:titleTextAppearance="@style/Toolbar.TitleText" />
+        app:titleTextAppearance="@style/Toolbar.TitleText" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/close_btn"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_close_24"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="right"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ListView
         android:id="@+id/listView1"

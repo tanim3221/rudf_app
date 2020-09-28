@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -23,6 +24,7 @@ public class DisplaySQLiteDataActivity extends AppCompatActivity {
     ListAdapter listAdapter;
     ListView LISTVIEW;
     private Toolbar appbar;
+    private ImageView closebtn;
 
     ArrayList<String> ID_Array;
     ArrayList<String> TITLE_Array;
@@ -36,8 +38,9 @@ public class DisplaySQLiteDataActivity extends AppCompatActivity {
 
         LISTVIEW = (ListView) findViewById(R.id.listView1);
         Toolbar appbar = (Toolbar) findViewById(R.id.toolbar);
+        ImageView closebtn =(ImageView) findViewById(R.id.close_btn);
         setSupportActionBar(appbar);
-        appbar.setNavigationOnClickListener(new View.OnClickListener() {
+        closebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                onBackPressed();

@@ -259,9 +259,9 @@ public class WebviewActivityFile extends AppCompatActivity {
                 okbtnD.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SQLiteDataBaseBuild();
-                        SQLiteTableBuild();
-                        InsertDataIntoSQLiteDatabase();
+                        //SQLiteDataBaseBuild();
+                        //SQLiteTableBuild();
+                       // InsertDataIntoSQLiteDatabase();
                         dialog.dismiss();
                     }
                 });
