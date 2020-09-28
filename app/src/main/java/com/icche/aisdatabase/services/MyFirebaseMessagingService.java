@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.icche.aisdatabase.WebviewActivity;
+import com.icche.aisdatabase.WebviewActivityFile;
 import com.icche.aisdatabase.utils.NotificationUtils;
 import com.icche.aisdatabase.vo.NotificationVO;
 
@@ -37,6 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             handleNotification(remoteMessage.getNotification());
         }// Check if message contains a notification payload.
 
+
     }
 
     private void handleNotification(RemoteMessage.Notification RemoteMsgNotification) {
@@ -46,7 +48,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationVO.setTitle(title);
         notificationVO.setMessage(message);
 
-        Intent resultIntent = new Intent(getApplicationContext(), WebviewActivity.class);
+        Intent resultIntent = new Intent(getApplicationContext(), WebviewActivityFile.class);
+        resultIntent.putExtra("viewNotificationMsg", message);
+        resultIntent.putExtra("viewNotificationTitle", title);
         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
         notificationUtils.displayNotification(notificationVO, resultIntent);
         notificationUtils.playNotificationSound();
@@ -65,8 +69,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationVO.setAction(action);
         notificationVO.setActionDestination(actionDestination);
 
-        Intent resultIntent = new Intent(getApplicationContext(), WebviewActivity.class);
-
+        Intent resultIntent = new Intent(getApplicationContext(), WebviewActivityFile.class);
+        resultIntent.putExtra("viewNotificationMsg", message);
+        resultIntent.putExtra("viewNotificationTitle", title);
+        resultIntent.putExtra("viewNotificationUrl", iconUrl);
         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
         notificationUtils.displayNotification(notificationVO, resultIntent);
         notificationUtils.playNotificationSound();

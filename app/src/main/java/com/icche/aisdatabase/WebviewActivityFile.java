@@ -48,6 +48,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -198,6 +199,7 @@ public class WebviewActivityFile extends AppCompatActivity {
         if (isNetworkStatusAvialable(getApplicationContext())) {
 
             setContentView(R.layout.activity_webview);
+            //onNewIntent(getIntent());
             verifyStoragePermissions(this);
             liContext = this.getApplicationContext();
             FrameLayout frameLayout = findViewById(R.id.layout);
@@ -228,6 +230,36 @@ public class WebviewActivityFile extends AppCompatActivity {
                 }
             });
             */
+
+            if (getIntent().getExtras() != null) {
+                //url_default = getIntent().getStringExtra("url");
+                String message = getIntent().getStringExtra("viewNotificationMsg");
+                String title = getIntent().getStringExtra("viewNotificationTitle");
+                // String url = getIntent().getStringExtra( "viewNotificationUrl" );
+                //String img = getIntent().getStringExtra( "viewNotificationImg" );
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                // builder.setTitle("Name");
+                builder.setCancelable(false);
+                //builder.setMessage("Message");
+                final View customLayout = getLayoutInflater().inflate(R.layout.custom_dialoge, null);
+                TextView titleD = customLayout.findViewById(R.id.titleNotify);
+                TextView messageD = customLayout.findViewById(R.id.messageNotify);
+                Button okbtnD = customLayout.findViewById(R.id.okBtn);
+                titleD.setText(title);
+                messageD.setText(message);
+                builder.setView(customLayout);
+                final AlertDialog dialog = builder.create();
+                okbtnD.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                //builder.setPositiveButton("OK", null);
+                dialog.show();
+            }
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -536,7 +568,46 @@ public class WebviewActivityFile extends AppCompatActivity {
     }
 
 
-    private  void showError() {
+
+
+    /*
+    @Override
+    protected void onNewIntent (Intent intent) {
+        super.onNewIntent(intent);
+        Bundle extras = intent.getExtras();
+        if (extras != null ) {
+            if (extras.containsKey( "viewNotificationMsg")) {
+                String message = extras.getString( "viewNotificationMsg" );
+                String title = extras.getString( "viewNotificationTitle" );
+                String url = extras.getString( "viewNotificationUrl" );
+                String img = extras.getString( "viewNotificationImg" );
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+               // builder.setTitle("Name");
+                builder.setCancelable(false);
+                //builder.setMessage("Message");
+                final View customLayout = getLayoutInflater().inflate(R.layout.custom_dialoge, null);
+                TextView titleD = customLayout.findViewById(R.id.titleNotify);
+                TextView messageD = customLayout.findViewById(R.id.messageNotify);
+                Button okbtnD = customLayout.findViewById(R.id.okBtn);
+                titleD.setText(title);
+                messageD.setText(message);
+                builder.setView(customLayout);
+                okbtnD.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                       dialog.dismiss();
+                    }
+                });
+                //builder.setPositiveButton("OK", null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        }
+    }
+     */
+
+    private void showError() {
         String titleText = getString(R.string.error_net);
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
         SpannableStringBuilder color = new SpannableStringBuilder(titleText);

@@ -19,6 +19,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.icche.aisdatabase.R;
 import com.icche.aisdatabase.SplashActivity;
+import com.icche.aisdatabase.WebviewActivityFile;
 import com.icche.aisdatabase.vo.NotificationVO;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class NotificationUtils {
     private static final int NOTIFICATION_ID = 200;
     private static final String PUSH_NOTIFICATION = "pushNotification";
     private static final String CHANNEL_ID = "myChannel";
-    private static final String CHANNEL_NAME = "myChannelName";
+    private static final String CHANNEL_NAME = "AIS Notifications";
     private static final String URL = "url";
     private static final String ACTIVITY = "activity";
     Map<String, Class> activityMap = new HashMap<>();
@@ -45,7 +46,7 @@ public class NotificationUtils {
     public NotificationUtils(Context mContext) {
         this.mContext = mContext;
         //Populate activity map
-        activityMap.put("SplashActivity", SplashActivity.class);
+        activityMap.put("WebviewActivityFile", WebviewActivityFile.class);
 
     }
 
@@ -103,14 +104,14 @@ public class NotificationUtils {
 
             if (iconBitMap == null) {
                 //When Inbox Style is applied, user can expand the notification
-                NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+                NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle();
 
-                inboxStyle.addLine(message);
+                bigTextStyle.bigText(message);
                 notification = mBuilder.setSmallIcon(icon).setTicker(title).setWhen(0)
-                        .setAutoCancel(true)
+                        .setAutoCancel(false)
                         .setContentTitle(title)
                         .setContentIntent(resultPendingIntent)
-                        .setStyle(inboxStyle)
+                        .setStyle(bigTextStyle)
                         .setSmallIcon(R.mipmap.ic_launcher)
                         .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), icon))
                         .setContentText(message)
