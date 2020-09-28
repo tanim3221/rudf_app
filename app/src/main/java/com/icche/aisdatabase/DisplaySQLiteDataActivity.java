@@ -37,11 +37,10 @@ public class DisplaySQLiteDataActivity extends AppCompatActivity {
         LISTVIEW = (ListView) findViewById(R.id.listView1);
         Toolbar appbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(appbar);
-        appbar.setOnClickListener(new View.OnClickListener() {
+        appbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent view = new Intent(DisplaySQLiteDataActivity.this, WebviewActivityFile.class);
-                startActivity(view);
+               onBackPressed();
             }
         });
 
