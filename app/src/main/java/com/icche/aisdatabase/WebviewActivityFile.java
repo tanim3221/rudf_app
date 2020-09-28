@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -24,6 +25,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -45,6 +47,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
@@ -73,6 +76,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -96,6 +100,8 @@ public class WebviewActivityFile extends AppCompatActivity {
     String load_url_s = "aisru.cf";
     private ProgressBar progressBar;
 
+    SQLiteDatabase sqLiteDatabaseObj;
+    String SQLiteDataBaseQueryHolder;
     // Storage Permissions variables
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {
@@ -253,6 +259,9 @@ public class WebviewActivityFile extends AppCompatActivity {
                 okbtnD.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        SQLiteDataBaseBuild();
+                        SQLiteTableBuild();
+                        InsertDataIntoSQLiteDatabase();
                         dialog.dismiss();
                     }
                 });
@@ -567,7 +576,24 @@ public class WebviewActivityFile extends AppCompatActivity {
         */
     }
 
+    public void SQLiteDataBaseBuild() {
+        sqLiteDatabaseObj = openOrCreateDatabase("ais", Context.MODE_PRIVATE, null);
+    }
 
+    public void SQLiteTableBuild() {
+        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS aisTable (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title VARCHAR, message VARCHAR, time VARCHAR);");
+    }
+
+    public void InsertDataIntoSQLiteDatabase() {
+        if (getIntent().getExtras() != null) {
+            String message = getIntent().getStringExtra("viewNotificationMsg");
+            String title = getIntent().getStringExtra("viewNotificationTitle");
+            String time = DateFormat.getDateInstance(DateFormat.FULL).format(new Date());
+            SQLiteDataBaseQueryHolder = "INSERT INTO aisTable (title,message, time) VALUES('" + title +
+                    "', '" + message + "', '" + time + "');";
+            sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder);
+        }
+    }
 
 
     /*

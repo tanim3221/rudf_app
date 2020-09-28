@@ -1,6 +1,8 @@
 package com.icche.aisdatabase.services;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -10,6 +12,8 @@ import com.icche.aisdatabase.WebviewActivityFile;
 import com.icche.aisdatabase.utils.NotificationUtils;
 import com.icche.aisdatabase.vo.NotificationVO;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -21,6 +25,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String ACTION = "action";
     private static final String DATA = "data";
     private static final String ACTION_DESTINATION = "action_destination";
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -38,7 +43,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             handleNotification(remoteMessage.getNotification());
         }// Check if message contains a notification payload.
 
-
     }
 
     private void handleNotification(RemoteMessage.Notification RemoteMsgNotification) {
@@ -51,6 +55,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent resultIntent = new Intent(getApplicationContext(), WebviewActivityFile.class);
         resultIntent.putExtra("viewNotificationMsg", message);
         resultIntent.putExtra("viewNotificationTitle", title);
+
+
         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
         notificationUtils.displayNotification(notificationVO, resultIntent);
         notificationUtils.playNotificationSound();
@@ -73,6 +79,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         resultIntent.putExtra("viewNotificationMsg", message);
         resultIntent.putExtra("viewNotificationTitle", title);
         resultIntent.putExtra("viewNotificationUrl", iconUrl);
+
         NotificationUtils notificationUtils = new NotificationUtils(getApplicationContext());
         notificationUtils.displayNotification(notificationVO, resultIntent);
         notificationUtils.playNotificationSound();
