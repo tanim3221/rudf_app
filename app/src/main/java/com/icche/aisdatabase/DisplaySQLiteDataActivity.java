@@ -1,12 +1,17 @@
 package com.icche.aisdatabase;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -17,6 +22,7 @@ public class DisplaySQLiteDataActivity extends AppCompatActivity {
     Cursor cursor;
     ListAdapter listAdapter;
     ListView LISTVIEW;
+    private Toolbar appbar;
 
     ArrayList<String> ID_Array;
     ArrayList<String> TITLE_Array;
@@ -29,6 +35,15 @@ public class DisplaySQLiteDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
 
         LISTVIEW = (ListView) findViewById(R.id.listView1);
+        Toolbar appbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(appbar);
+        appbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent view = new Intent(DisplaySQLiteDataActivity.this, WebviewActivityFile.class);
+                startActivity(view);
+            }
+        });
 
         ID_Array = new ArrayList<String>();
         TIME_Array = new ArrayList<String>();
@@ -51,7 +66,7 @@ public class DisplaySQLiteDataActivity extends AppCompatActivity {
 
         sqLiteDatabase = sqLiteHelper.getWritableDatabase();
 
-        cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + SQLiteHelper.TABLE_NAME + "", null);
+        cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + SQLiteHelper.TABLE_NAME + " ORDER BY ID DESC", null);
 
         ID_Array.clear();
         TITLE_Array.clear();

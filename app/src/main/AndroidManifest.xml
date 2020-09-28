@@ -19,13 +19,7 @@
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
         <activity android:name="com.icche.aisdatabase.WebviewActivity"></activity>
-        <activity android:name="com.icche.aisdatabase.DisplaySQLiteDataActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name="com.icche.aisdatabase.DisplaySQLiteDataActivity"></activity>
         <activity
             android:name="com.icche.aisdatabase.WebviewActivityFile"
             android:configChanges="keyboard|keyboardHidden|locale|orientation|screenSize"

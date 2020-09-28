@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AISDB.iml" filepath="$PROJECT_DIR$/AISDB.iml" group="AISDB" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AISDB-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AISDB-app.iml" group="AISDB/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/AISDB-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/AISDB-library.iml" group="AISDB/library" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ais_family_app_private.iml" filepath="$PROJECT_DIR$/.idea/modules/ais_family_app_private.iml" group="ais_family_app_private" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ais_family_app_private-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ais_family_app_private-app.iml" group="ais_family_app_private/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ais_family_app_private-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ais_family_app_private-library.iml" group="ais_family_app_private/library" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ais_family_app_private_.iml" filepath="$PROJECT_DIR$/.idea/modules/ais_family_app_private_.iml" group="ais_family_app_private_" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ais_family_app_private_-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ais_family_app_private_-app.iml" group="ais_family_app_private_/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ais_family_app_private_-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ais_family_app_private_-library.iml" group="ais_family_app_private_/library" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ais_family_app_private_S.iml" filepath="$PROJECT_DIR$/.idea/modules/ais_family_app_private_S.iml" group="ais_family_app_private_S" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="ais_family_app_private_S/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/library.iml" group="ais_family_app_private_S/library" />
     </modules>
   </component>
 </project>

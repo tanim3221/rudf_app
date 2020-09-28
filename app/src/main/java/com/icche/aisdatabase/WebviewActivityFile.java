@@ -337,7 +337,9 @@ public class WebviewActivityFile extends AppCompatActivity {
                                     Intent about = new Intent(WebviewActivityFile.this, AboutApp.class);
                                     startActivity(about);
                                     break;
-
+                                case R.id.nav_notify:
+                                    Intent notify =new Intent(WebviewActivityFile.this, DisplaySQLiteDataActivity.class);
+                                    startActivity(notify);
                                 case R.id.nav_home:
                                     webView.loadUrl(load_url);
                                     break;
