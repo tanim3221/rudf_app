@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.icche.aisdatabase",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 11,
+      "versionName": "ais.family.27092020",
+      "enabled": true,
+      "outputFile": "app-release.apk"
+    }
+  ]
+}
