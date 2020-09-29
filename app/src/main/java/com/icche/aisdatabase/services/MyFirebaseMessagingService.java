@@ -71,7 +71,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationUtils.playNotificationSound();
 
         String date = DateFormat.getDateInstance(DateFormat.LONG).format(new Date());
-        String time = new SimpleDateFormat("hh:mm", Locale.getDefault()).format(new Date());
+        String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
         SQLiteDataBaseQueryHolder = "INSERT INTO aisTable (title,message, time) VALUES('" + title +
                 "', '" + message + "', '" +date+" "+time + "');";
         sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder);
@@ -100,7 +100,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationUtils.playNotificationSound();
 
         String date = DateFormat.getDateInstance(DateFormat.FULL).format(new Date());
-        String time = new SimpleDateFormat("hh:mm", Locale.getDefault()).format(new Date());
+        String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
         SQLiteDataBaseQueryHolder = "INSERT INTO aisTable (title,message, time) VALUES('" + title +
                 "', '" + message + "', '" + date+" "+time + "');";
         sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder);
