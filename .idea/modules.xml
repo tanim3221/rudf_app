@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ais_family_app_private.iml" filepath="$PROJECT_DIR$/.idea/modules/ais_family_app_private.iml" group="ais_family_app_private" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ais_family_app_private-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ais_family_app_private-app.iml" group="ais_family_app_private/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ais_family_app_private-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ais_family_app_private-library.iml" group="ais_family_app_private/library" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ais_family_app_private_Sr.iml" filepath="$PROJECT_DIR$/.idea/modules/ais_family_app_private_Sr.iml" group="ais_family_app_private_Sr" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="ais_family_app_private_Sr/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/library.iml" group="ais_family_app_private_Sr/library" />

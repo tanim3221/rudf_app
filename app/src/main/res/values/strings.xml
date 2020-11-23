@@ -2,6 +2,7 @@
     <string name="app_name">AIS FAMILY</string>
     <string name="call_toast">Call app opening</string>
     <string name="email_toast">Email app opening</string>
+    <string name="pdf_not_view">No app found to open pdf.</string>
     <string name="facebook_view">Facebook Profile opening</string>
     <string name="not_fb"> Facebook app not installed </string>
     <string name="connect_net"> Network Disconnected </string>
