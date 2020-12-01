@@ -97,8 +97,8 @@ public class WebviewActivityFile extends AppCompatActivity {
     private String LOG_TAG = "DREG";
     private Uri[] results;
     private FloatingActionButton floatingActionButton;
-    String load_url = "http://aisru.cf";
-    String load_url_s = "aisru.cf";
+    String load_url = "http://aisfamily.cf";
+    String load_url_s = "aisfamily.cf";
     private ProgressBar progressBar;
 
     SQLiteDatabase sqLiteDatabaseObj;
@@ -876,12 +876,12 @@ public class WebviewActivityFile extends AppCompatActivity {
 
             if (getIntent().getExtras() != null) {
                 if (appLinkData == null){
-                    webView.loadUrl("http://aisru.cf");
+                    webView.loadUrl("http://aisfamily.cf");
                 }else
                     webView.loadUrl(String.valueOf(appLinkData));
 
             } else if (getIntent().getExtras() == null){
-                webView.loadUrl("http://aisru.cf");
+                webView.loadUrl("http://aisfamily.cf");
 
             }
         }
