@@ -19,12 +19,10 @@
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
         <activity android:name="com.icche.aisdatabase.WebviewActivity"></activity>
-        <activity
-            android:name="com.icche.aisdatabase.DisplaySQLiteDataActivity"
-            android:noHistory="true"></activity>
+        <activity android:name="com.icche.aisdatabase.DisplaySQLiteDataActivity"></activity>
         <activity
             android:name="com.icche.aisdatabase.WebviewActivityFile"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:configChanges="keyboard|keyboardHidden|locale|orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
