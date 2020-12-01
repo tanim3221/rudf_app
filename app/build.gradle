@@ -20,8 +20,8 @@ android {
         applicationId "com.icche.aisdatabase"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 14
-        versionName 'ais.family.23112020'
+        versionCode 15
+        versionName 'ais.family.01122020'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
 

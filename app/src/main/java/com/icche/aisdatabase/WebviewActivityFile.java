@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -401,8 +402,11 @@ public class WebviewActivityFile extends AppCompatActivity {
             } else if (Build.VERSION.SDK_INT >= 11 && Build.VERSION.SDK_INT < 19) {
                 webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
             }
-
-            webView.loadUrl(load_url);
+            if (savedInstanceState == null) {
+                webView.restoreState(savedInstanceState);
+            } else {
+                webView.loadUrl(load_url);
+            }
 /*
             webView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
                 @Override
@@ -578,6 +582,23 @@ public class WebviewActivityFile extends AppCompatActivity {
         String appLinkAction = appLinkIntent.getAction();
         Uri appLinkData = appLinkIntent.getData();
         */
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        webView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        webView.restoreState(savedInstanceState);
     }
 
     public void SQLiteDataBaseBuild() {

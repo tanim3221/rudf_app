@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 14,
-      "versionName": "ais.family.23112020",
+      "versionCode": 15,
+      "versionName": "ais.family.01122020",
       "enabled": true,
       "outputFile": "app-release.apk"
     }
