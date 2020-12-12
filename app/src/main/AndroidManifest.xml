@@ -50,6 +50,16 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.icche.rudf.About"
+            android:configChanges="keyboard|keyboardHidden|locale|orientation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
         <service android:name="com.icche.rudf.services.MyFirebaseInstanceIdService">
             <intent-filter>

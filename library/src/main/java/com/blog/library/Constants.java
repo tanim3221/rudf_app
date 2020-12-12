@@ -16,5 +16,5 @@ class Constants {
 
     static final String TAG = "UpdateChecker";
     // app JSON link and apk link set on JSON file.
-    static final String UPDATE_URL = "https://raw.githubusercontent.com/tanim3221/rudf_app/master/update/update.json";
+    static final String UPDATE_URL = "";
 }

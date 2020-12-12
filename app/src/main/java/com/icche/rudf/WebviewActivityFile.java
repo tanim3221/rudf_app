@@ -1,6 +1,7 @@
 package com.icche.rudf;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DownloadManager;
@@ -54,11 +55,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.blog.library.UpdateChecker;
 import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
@@ -87,8 +90,12 @@ public class WebviewActivityFile extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     String load_url = "http://rudf.cf";
     String load_url_s = "rudf.cf";
+    String fbapp = "fb://group/49880688703";
+    String fburl = "https://www.facebook.com/groups/bfdf.ru/";
+    String pageApp = "fb://page/169680089735915";
+    String pageurl = "https://www.facebook.com/rubfdf/";
     private ProgressBar progressBar;
-
+    NavigationView navigationView;
     SQLiteDatabase sqLiteDatabaseObj;
     String SQLiteDataBaseQueryHolder;
     // Storage Permissions variables
@@ -264,19 +271,20 @@ public class WebviewActivityFile extends AppCompatActivity {
                     UpdateChecker.checkForDialog(WebviewActivityFile.this);
                 }
             }, 1);
-
+   /*
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("WrongConstant")
                 @Override
                 public void onClick(View v) {
                     DrawerLayout navDrawer = findViewById(R.id.drawer_layout);
                     // If the navigation drawer is not open then open it, if its already open then close it.
                     if (!navDrawer.isDrawerOpen(Gravity.START)) navDrawer.openDrawer(Gravity.START);
                     else navDrawer.closeDrawer(Gravity.END);
-                }
+                                   }
             });
 
 
-     /*
+
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -286,7 +294,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                 }
             });
 
-
+*/
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -314,14 +322,73 @@ public class WebviewActivityFile extends AppCompatActivity {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
+                                case R.id.nav_share:
+                                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                                    shareIntent.setType("text/plain");
+                                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, (getString(R.string.app_name)));
+                                    String shareMessage = (getString(R.string.msg_share));
+                                    shareMessage = shareMessage + getString(R.string.app_download_link);
+                                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                                    startActivity(Intent.createChooser(shareIntent, (getString(R.string.share))));
+                                    break;
+                                case R.id.nav_about:
+                                    Intent a = new Intent(WebviewActivityFile.this, About.class);
+                                    startActivity(a);
+                                    break;
+
+                                case R.id.FacebookGroup:
+                                    if (isNetworkStatusAvialable(getApplicationContext())) {
+                                        if (isAppInstalled(liContext, "com.facebook.orca") || isAppInstalled(liContext, "com.facebook.katana")
+                                                || isAppInstalled(liContext, "com.example.facebook") || isAppInstalled(liContext, "com.facebook.android")) {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(fbapp)));
+                                        } else {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(fburl)));
+                                        }
+
+                                    } else {
+                                        String titleText = getString(R.string.fb_grp);
+                                        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
+                                        SpannableStringBuilder color = new SpannableStringBuilder(titleText);
+                                        color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
+                                        builder.setTitle(getString(R.string.connect_net))
+                                                .setMessage(color)
+                                                /*.setNegativeButton(getString(R.string.ok_btn), null)*/
+                                                .setCancelable(true)
+                                                .show();
+                                    }
+                                    break;
+
+                                case R.id.FacebookPage:
+                                    if (isNetworkStatusAvialable(getApplicationContext())) {
+                                        if (isAppInstalled(liContext, "com.facebook.orca") || isAppInstalled(liContext, "com.facebook.katana")
+                                                || isAppInstalled(liContext, "com.example.facebook") || isAppInstalled(liContext, "com.facebook.android")) {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pageApp)));
+                                        } else {
+                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pageurl)));
+                                        }
+
+                                    } else {
+                                        String titleText = getString(R.string.fb_grp);
+                                        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
+                                        SpannableStringBuilder color = new SpannableStringBuilder(titleText);
+                                        color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
+                                        builder.setTitle(getString(R.string.connect_net))
+                                                .setMessage(color)
+                                                /* .setNegativeButton(getString(R.string.ok_btn), null)*/
+                                                .setCancelable(true)
+                                                .show();
+                                    }
+                                    break;
 
                                 case R.id.nav_exit:
                                     int pid = android.os.Process.myPid();
                                     android.os.Process.killProcess(pid);
 
-                                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                                    intent.addCategory(Intent.CATEGORY_HOME);
-                                    startActivity(intent);
+                                    Intent intente = new Intent(Intent.ACTION_MAIN);
+                                    intente.addCategory(Intent.CATEGORY_HOME);
+                                    startActivity(intente);
                                     break;
 
                                 case R.id.nav_feedback:
@@ -334,7 +401,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                                     startActivity(Intent.createChooser(feedback, (getString(R.string.feedTitle))));
                                     break;
 
-                                case R.id.nav_about:
+                                case R.id.nav_about_app:
                                     Intent about = new Intent(WebviewActivityFile.this, AboutApp.class);
                                     startActivity(about);
                                     break;
@@ -361,7 +428,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                     popupMenu.show();
                 }
             });
-            */
+
 
             webView = (WebView) findViewById(R.id.webView);
             final WebSettings webSettings = webView.getSettings();
