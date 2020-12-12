@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 15,
-      "versionName": "ais.family.01122020",
+      "versionCode": 1,
+      "versionName": "rudf.12122020",
       "enabled": true,
       "outputFile": "app-release.apk"
     }
