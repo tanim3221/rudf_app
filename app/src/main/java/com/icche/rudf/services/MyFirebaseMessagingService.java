@@ -1,4 +1,4 @@
-package com.icche.aisdatabase.services;
+package com.icche.rudf.services;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,10 +7,9 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.icche.aisdatabase.WebviewActivity;
-import com.icche.aisdatabase.WebviewActivityFile;
-import com.icche.aisdatabase.utils.NotificationUtils;
-import com.icche.aisdatabase.vo.NotificationVO;
+import com.icche.rudf.WebviewActivityFile;
+import com.icche.rudf.utils.NotificationUtils;
+import com.icche.rudf.vo.NotificationVO;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

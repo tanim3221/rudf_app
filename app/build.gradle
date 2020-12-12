@@ -3,13 +3,13 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         release {
-            storeFile file('..\\update\\aisfamily.jks')
+            storeFile file('..\\update\\rudf.jks')
             storePassword '123456'
             keyAlias = 'key0'
             keyPassword '123456'
         }
         debug {
-            storeFile file('..\\update\\aisfamily.jks')
+            storeFile file('..\\update\\rudf.jks')
             storePassword '123456'
             keyAlias = 'key0'
             keyPassword '123456'
@@ -17,11 +17,11 @@ android {
     }
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.icche.aisdatabase"
+        applicationId "com.icche.rudf"
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 15
-        versionName 'ais.family.01122020'
+        versionCode 1
+        versionName 'rudf.12122020'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
 

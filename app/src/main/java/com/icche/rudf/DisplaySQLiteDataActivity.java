@@ -1,9 +1,7 @@
-package com.icche.aisdatabase;
+package com.icche.rudf;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +10,6 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -87,7 +84,7 @@ public class DisplaySQLiteDataActivity extends AppCompatActivity {
             } while (cursor.moveToNext());
         }
 
-        listAdapter = new com.icche.aisdatabase.ListAdapter(DisplaySQLiteDataActivity.this,
+        listAdapter = new com.icche.rudf.ListAdapter(DisplaySQLiteDataActivity.this,
                 ID_Array,
                 TITLE_Array,
                 MESSAGE_Array,

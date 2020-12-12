@@ -1,4 +1,4 @@
-package com.icche.aisdatabase;
+package com.icche.rudf;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

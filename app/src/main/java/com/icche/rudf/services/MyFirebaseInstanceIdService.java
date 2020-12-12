@@ -1,4 +1,4 @@
-package com.icche.aisdatabase.services;
+package com.icche.rudf.services;
 
 import android.util.Log;
 

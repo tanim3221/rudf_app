@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#08003c</color>
-    <color name="colorPrimaryDark">#08003c</color>
-    <color name="colorAccent">#08003c</color>
-    <color name="progressBar">#BDBDBD</color>
-    <color name="webcolor">#130677</color>
+    <color name="progressBar">@color/colorPrimaryDark</color>
+    <color name="webcolor">#1867a7</color>
     <color name="cardColor">#F1F1F1</color>
+    <color name="colorPrimary">#1867a7</color>
+    <color name="colorPrimaryDark">#1867a7</color>
+    <color name="header_bg">@color/colorPrimaryDark</color>
+    <color name="colorAccent">#444444</color>
+    <color name="header_back">@color/colorPrimaryDark</color>
 
 </resources>

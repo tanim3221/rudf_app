@@ -8,6 +8,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ais_family_app_private_Sr.iml" filepath="$PROJECT_DIR$/.idea/modules/ais_family_app_private_Sr.iml" group="ais_family_app_private_Sr" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="ais_family_app_private_Sr/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/library.iml" group="ais_family_app_private_Sr/library" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/rudf12122020.iml" filepath="$PROJECT_DIR$/.idea/modules/rudf12122020.iml" group="rudf12122020" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/rudf12122020-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/rudf12122020-app.iml" group="rudf12122020/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/rudf12122020-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/rudf12122020-library.iml" group="rudf12122020/library" />
     </modules>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package com.icche.aisdatabase;
+package com.icche.rudf;
 
 import org.junit.Test;
 

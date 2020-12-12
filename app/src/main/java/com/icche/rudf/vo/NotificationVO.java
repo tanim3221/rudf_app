@@ -1,4 +1,4 @@
-package com.icche.aisdatabase.vo;
+package com.icche.rudf.vo;
 
 /**
  * Created by Abhi on 13 Nov 2017 013.

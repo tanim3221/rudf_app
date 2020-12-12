@@ -1,4 +1,4 @@
-package com.icche.aisdatabase;
+package com.icche.rudf;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -30,8 +30,6 @@ import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
@@ -49,7 +47,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -57,9 +54,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.blog.library.UpdateChecker;
-import com.github.angads25.filepicker.controller.DialogSelectionListener;
-import com.github.angads25.filepicker.model.DialogConfigs;
-import com.github.angads25.filepicker.model.DialogProperties;
 import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -73,21 +67,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class WebviewActivityFile23112020 extends AppCompatActivity {
+public class WebviewActivityFile extends AppCompatActivity {
 
     private static final int INPUT_FILE_REQUEST_CODE = 1;
-    private static final String TAG = WebviewActivityFile23112020.class.getSimpleName();
-    // Storage Permissions variables
-    private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA
-    };
-    String load_url = "http://aisru.cf";
-    String load_url_s = "aisru.cf";
-    SQLiteDatabase sqLiteDatabaseObj;
-    String SQLiteDataBaseQueryHolder;
+    private static final String TAG = WebviewActivityFile.class.getSimpleName();
     private WebSettings webSettings;
     private ValueCallback<Uri[]> mUploadMessage;
     private String mCameraPhotoPath = null;
@@ -99,7 +82,71 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
     private String LOG_TAG = "DREG";
     private Uri[] results;
     private FloatingActionButton floatingActionButton;
+    String load_url = "http://rudf.cf";
+    String load_url_s = "rudf.cf";
     private ProgressBar progressBar;
+
+    SQLiteDatabase sqLiteDatabaseObj;
+    String SQLiteDataBaseQueryHolder;
+    // Storage Permissions variables
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != INPUT_FILE_REQUEST_CODE || mUploadMessage == null) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+        try {
+            String file_path = mCameraPhotoPath.replace("file:","");
+            File file = new File(file_path);
+            size = file.length();
+
+        }catch (Exception e){
+            Log.e("Error!", "Error while opening image file" + e.getLocalizedMessage());
+        }
+
+        if (data != null || mCameraPhotoPath != null) {
+            Integer count = 0; //fix fby https://github.com/nnian
+            ClipData images = null;
+            try {
+                images = data.getClipData();
+            }catch (Exception e) {
+                Log.e("Error!", e.getLocalizedMessage());
+            }
+
+            if (images == null && data != null && data.getDataString() != null) {
+                count = data.getDataString().length();
+            } else if (images != null) {
+                count = images.getItemCount();
+            }
+            Uri[] results = new Uri[count];
+            // Check that the response is a good one
+            if (resultCode == Activity.RESULT_OK) {
+                if (size != 0) {
+                    // If there is not data, then we may have taken a photo
+                    if (mCameraPhotoPath != null) {
+                        results = new Uri[]{Uri.parse(mCameraPhotoPath)};
+                    }
+                } else if (data.getClipData() == null) {
+                    results = new Uri[]{Uri.parse(data.getDataString())};
+                } else {
+
+                    for (int i = 0; i < images.getItemCount(); i++) {
+                        results[i] = images.getItemAt(i).getUri();
+                    }
+                }
+            }
+
+            mUploadMessage.onReceiveValue(results);
+            mUploadMessage = null;
+        }
+    }
 
     public static void verifyStoragePermissions(Activity activity) {
         // Check if we have read or write permission
@@ -135,58 +182,6 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                 return netInfos.isConnected();
         }
         return false;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != INPUT_FILE_REQUEST_CODE || mUploadMessage == null) {
-            super.onActivityResult(requestCode, resultCode, data);
-            return;
-        }
-        try {
-            String file_path = mCameraPhotoPath.replace("file:", "");
-            File file = new File(file_path);
-            size = file.length();
-
-        } catch (Exception e) {
-            Log.e("Error!", "Error while opening image file" + e.getLocalizedMessage());
-        }
-
-        if (data != null || mCameraPhotoPath != null) {
-            Integer count = 0; //fix fby https://github.com/nnian
-            ClipData images = null;
-            try {
-                images = data.getClipData();
-            } catch (Exception e) {
-                Log.e("Error!", e.getLocalizedMessage());
-            }
-
-            if (images == null && data != null && data.getDataString() != null) {
-                count = data.getDataString().length();
-            } else if (images != null) {
-                count = images.getItemCount();
-            }
-            Uri[] results = new Uri[count];
-            // Check that the response is a good one
-            if (resultCode == Activity.RESULT_OK) {
-                if (size != 0) {
-                    // If there is not data, then we may have taken a photo
-                    if (mCameraPhotoPath != null) {
-                        results = new Uri[]{Uri.parse(mCameraPhotoPath)};
-                    }
-                } else if (data.getClipData() == null) {
-                    results = new Uri[]{Uri.parse(data.getDataString())};
-                } else {
-
-                    for (int i = 0; i < images.getItemCount(); i++) {
-                        results[i] = images.getItemAt(i).getUri();
-                    }
-                }
-            }
-
-            mUploadMessage.onReceiveValue(results);
-            mUploadMessage = null;
-        }
     }
 
     @Override
@@ -252,7 +247,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                     public void onClick(View v) {
                         //SQLiteDataBaseBuild();
                         //SQLiteTableBuild();
-                        // InsertDataIntoSQLiteDatabase();
+                       // InsertDataIntoSQLiteDatabase();
                         dialog.dismiss();
                     }
                 });
@@ -263,7 +258,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    UpdateChecker.checkForDialog(WebviewActivityFile23112020.this);
+                    UpdateChecker.checkForDialog(WebviewActivityFile.this);
                 }
             }, 1);
             /*
@@ -280,7 +275,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(WebviewActivityFile23112020.this, floatingActionButton);
+                    PopupMenu popupMenu = new PopupMenu(WebviewActivityFile.this, floatingActionButton);
 
                     try {
                         Field[] fields = popupMenu.getClass().getDeclaredFields();
@@ -325,11 +320,11 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                                     break;
 
                                 case R.id.nav_about:
-                                    Intent about = new Intent(WebviewActivityFile23112020.this, AboutApp.class);
+                                    Intent about = new Intent(WebviewActivityFile.this, AboutApp.class);
                                     startActivity(about);
                                     break;
                                 case R.id.nav_notify:
-                                    Intent notify = new Intent(WebviewActivityFile23112020.this, DisplaySQLiteDataActivity.class);
+                                    Intent notify =new Intent(WebviewActivityFile.this, DisplaySQLiteDataActivity.class);
                                     startActivity(notify);
                                 case R.id.nav_home:
                                     webView.loadUrl(load_url);
@@ -340,7 +335,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                                     break;
 
                                 case R.id.nav_update:
-                                    UpdateChecker.checkForDialog(WebviewActivityFile23112020.this);
+                                    UpdateChecker.checkForDialog(WebviewActivityFile.this);
                                     break;
 
                             }
@@ -384,7 +379,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
 
             });
             webView.setWebChromeClient(new PQChromeClient());
-            webView.setWebChromeClient(new FileChromeClient());
+            //webView.setWebChromeClient(new FileChromeClient());
             //if SDK version is greater of 19 then activate hardware acceleration otherwise activate software acceleration
             if (Build.VERSION.SDK_INT >= 19) {
                 webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
@@ -430,6 +425,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                 }
 
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
                     if (url.startsWith("tel:")) {
                         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
                         startActivity(intent);
@@ -451,7 +447,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
                             SpannableStringBuilder color = new SpannableStringBuilder(titleText);
                             color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile23112020.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
                             builder.setTitle(getString(R.string.connect_net))
                                     .setMessage(color)
                                     /*   .setNegativeButton(getString(R.string.ok_btn), null)*/
@@ -487,7 +483,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                             ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
                             SpannableStringBuilder color = new SpannableStringBuilder(titleText);
                             color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile23112020.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
                             builder.setTitle(getString(R.string.connect_net))
                                     .setMessage(color)
                                     /*  .setNegativeButton(getString(R.string.ok_btn), null)*/
@@ -495,8 +491,8 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                                     .show();
                         }
                         return true;
-                        // } else  if (!url.startsWith(load_url) || !url.contains(load_url_s) || !url.contains(load_url_w) || !url.contains(load_url_s_w)) {
-                    } else if (!url.contains(load_url_s)) {
+                   // } else  if (!url.startsWith(load_url) || !url.contains(load_url_s) || !url.contains(load_url_w) || !url.contains(load_url_s_w)) {
+                    } else  if (!url.contains(load_url_s)) {
                         //view.getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                         Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(i);
@@ -545,7 +541,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
 
                         } else {
 
-                            ActivityCompat.requestPermissions(WebviewActivityFile23112020.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                            ActivityCompat.requestPermissions(WebviewActivityFile.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                         }
                     } else {
 
@@ -631,7 +627,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
         ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
         SpannableStringBuilder color = new SpannableStringBuilder(titleText);
         color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile23112020.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
         //builder.setTitle(getString(R.string.connect_net))
         builder.setMessage(color)
                 //.setIcon(getResources().getDrawable(R.drawable.ic_wifi_off))
@@ -663,90 +659,107 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                 .show();
     }
 
-    private void openFileSelectionDialog() {
+    /*
+        private void openFileSelectionDialog() {
 
-        if (null != dialog && dialog.isShowing()) {
-            dialog.dismiss();
+            if (null != dialog && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
+            //Create a DialogProperties object.
+            final DialogProperties properties = new DialogProperties();
+
+            //Instantiate FilePickerDialog with Context and DialogProperties.
+            dialog = new FilePickerDialog(WebviewActivityFile.this, properties);
+            dialog.setTitle("Choose a File");
+            dialog.setPositiveBtnName("Choose");
+            dialog.setNegativeBtnName("Cancel");
+            //properties.selection_mode = DialogConfigs.MULTI_MODE; // for multiple files
+            properties.selection_mode = DialogConfigs.SINGLE_MODE; // for single file
+            properties.selection_type = DialogConfigs.FILE_SELECT;
+
+            //Method handle selected files.
+            dialog.setDialogSelectionListener(new DialogSelectionListener() {
+                @Override
+                public void onSelectedFilePaths(String[] files) {
+                    results = new Uri[files.length];
+                    for (int i = 0; i < files.length; i++) {
+                        String filePath = new File(files[i]).getAbsolutePath();
+                        if (!filePath.startsWith("file://")) {
+                            filePath = "file://" + filePath;
+                        }
+                        results[i] = Uri.parse(filePath);
+                        Log.d(LOG_TAG, "file path: " + filePath);
+                        Log.d(LOG_TAG, "file uri: " + String.valueOf(results[i]));
+                    }
+                    mUploadMessage.onReceiveValue(results);
+                    mUploadMessage = null;
+                }
+            });
+            dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    if (null != mUploadMessage) {
+                        if (null != results && results.length >= 1) {
+                            mUploadMessage.onReceiveValue(results);
+                        } else {
+                            mUploadMessage.onReceiveValue(null);
+                        }
+                    }
+                    mUploadMessage = null;
+                }
+            });
+            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    if (null != mUploadMessage) {
+                        if (null != results && results.length >= 1) {
+                            mUploadMessage.onReceiveValue(results);
+                        } else {
+                            mUploadMessage.onReceiveValue(null);
+                        }
+                    }
+                    mUploadMessage = null;
+                }
+            });
+
+            dialog.show();
+            Window window = dialog.getWindow();
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+        }
+        public class FileChromeClient extends WebChromeClient {
+
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                // Double check that we don't have any existing callbacks
+                if (mUploadMessage != null) {
+                    mUploadMessage.onReceiveValue(null);
+                }
+                mUploadMessage = filePathCallback;
+
+                openFileSelectionDialog();
+
+                return true;
+            }
+
+        }
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+            switch (requestCode) {
+                case FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT: {
+                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        if (dialog != null) {
+                            openFileSelectionDialog();
+                        }
+                    } else {
+                        //Permission has not been granted. Notify the user.
+                        Toast.makeText(WebviewActivityFile.this, "Permission is Required for getting list of files", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
         }
 
-        //Create a DialogProperties object.
-        final DialogProperties properties = new DialogProperties();
-
-        //Instantiate FilePickerDialog with Context and DialogProperties.
-        dialog = new FilePickerDialog(WebviewActivityFile23112020.this, properties);
-        dialog.setTitle("Choose a File");
-        dialog.setPositiveBtnName("Choose");
-        dialog.setNegativeBtnName("Cancel");
-        //properties.selection_mode = DialogConfigs.MULTI_MODE; // for multiple files
-        properties.selection_mode = DialogConfigs.SINGLE_MODE; // for single file
-        properties.selection_type = DialogConfigs.FILE_SELECT;
-
-        //Method handle selected files.
-        dialog.setDialogSelectionListener(new DialogSelectionListener() {
-            @Override
-            public void onSelectedFilePaths(String[] files) {
-                results = new Uri[files.length];
-                for (int i = 0; i < files.length; i++) {
-                    String filePath = new File(files[i]).getAbsolutePath();
-                    if (!filePath.startsWith("file://")) {
-                        filePath = "file://" + filePath;
-                    }
-                    results[i] = Uri.parse(filePath);
-                    Log.d(LOG_TAG, "file path: " + filePath);
-                    Log.d(LOG_TAG, "file uri: " + String.valueOf(results[i]));
-                }
-                mUploadMessage.onReceiveValue(results);
-                mUploadMessage = null;
-            }
-        });
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                if (null != mUploadMessage) {
-                    if (null != results && results.length >= 1) {
-                        mUploadMessage.onReceiveValue(results);
-                    } else {
-                        mUploadMessage.onReceiveValue(null);
-                    }
-                }
-                mUploadMessage = null;
-            }
-        });
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                if (null != mUploadMessage) {
-                    if (null != results && results.length >= 1) {
-                        mUploadMessage.onReceiveValue(results);
-                    } else {
-                        mUploadMessage.onReceiveValue(null);
-                    }
-                }
-                mUploadMessage = null;
-            }
-        });
-
-        dialog.show();
-        Window window = dialog.getWindow();
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (dialog != null) {
-                        openFileSelectionDialog();
-                    }
-                } else {
-                    //Permission has not been granted. Notify the user.
-                    Toast.makeText(WebviewActivityFile23112020.this, "Permission is Required for getting list of files", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
+     */
     @Override
     public void onCreateContextMenu(ContextMenu contextMenu, final View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
         super.onCreateContextMenu(contextMenu, view, contextMenuInfo);
@@ -802,7 +815,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                 }
 
             } else {
-                ActivityCompat.requestPermissions(WebviewActivityFile23112020.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(WebviewActivityFile.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
         } else {
             if (hitTestResult.getType() == WebView.HitTestResult.IMAGE_TYPE || hitTestResult.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE) {
@@ -833,7 +846,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                             }
                         });
             } else {
-                ActivityCompat.requestPermissions(WebviewActivityFile23112020.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(WebviewActivityFile.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             }
 
         }
@@ -848,12 +861,12 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
 
             if (getIntent().getExtras() != null) {
                 if (appLinkData == null){
-                    webView.loadUrl("http://aisru.cf");
+                    webView.loadUrl("http://rudf.cf");
                 }else
                     webView.loadUrl(String.valueOf(appLinkData));
 
             } else if (getIntent().getExtras() == null){
-                webView.loadUrl("http://aisru.cf");
+                webView.loadUrl("http://rudf.cf");
 
             }
         }
@@ -885,7 +898,7 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
 
         final String filename = URLUtil.guessFileName(url, contentDisposition, mimetype);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile23112020.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
         // builder.setIcon(getResources().getDrawable(R.drawable.ic_file_download));
         //builder.setTitle(getString(R.string.download_file_title));
         builder.setTitle(R.string.do_download);
@@ -944,23 +957,6 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
         }
     }
 
-    public class FileChromeClient extends WebChromeClient {
-
-        @Override
-        public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
-            // Double check that we don't have any existing callbacks
-            if (mUploadMessage != null) {
-                mUploadMessage.onReceiveValue(null);
-            }
-            mUploadMessage = filePathCallback;
-
-            openFileSelectionDialog();
-
-            return true;
-        }
-
-    }
-
     public class PQChromeClient extends WebChromeClient {
 
         // For Android 5.0+
@@ -993,10 +989,20 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                 }
             }
 
+
+            String[] mimetypes = {
+                    "application/*",
+                    "audio/*",
+                    "image/*",
+                    "multipart/*",
+                    "text/*"
+            };
+
             Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
             contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-            contentSelectionIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            contentSelectionIntent.setType("image/*|application/pdf|doc|ppt|xlxs|docx/*");
+            contentSelectionIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
+            contentSelectionIntent.setType("*/*");
+            contentSelectionIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
 
             Intent[] intentArray;
             if (takePictureIntent != null) {
@@ -1005,11 +1011,12 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                 intentArray = new Intent[2];
             }
 
+
             Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
             chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
-            chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
+            chooserIntent.putExtra(Intent.EXTRA_TITLE, "File Chooser");
             chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-            startActivityForResult(Intent.createChooser(chooserIntent, "Select Images"), 1);
+            startActivityForResult(Intent.createChooser(chooserIntent, "Select File"), 1);
 
             return true;
 

@@ -1,4 +1,4 @@
-package com.icche.aisdatabase.utils;
+package com.icche.rudf.utils;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -17,10 +17,9 @@ import android.text.Html;
 
 import androidx.core.app.NotificationCompat;
 
-import com.icche.aisdatabase.R;
-import com.icche.aisdatabase.SplashActivity;
-import com.icche.aisdatabase.WebviewActivityFile;
-import com.icche.aisdatabase.vo.NotificationVO;
+import com.icche.rudf.R;
+import com.icche.rudf.WebviewActivityFile;
+import com.icche.rudf.vo.NotificationVO;
 
 import java.io.IOException;
 import java.io.InputStream;

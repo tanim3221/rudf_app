@@ -1,4 +1,4 @@
-package com.icche.aisdatabase;
+package com.icche.rudf;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;

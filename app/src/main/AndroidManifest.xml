@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.icche.aisdatabase">
+    package="com.icche.rudf">
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"></uses-permission>
 
@@ -18,17 +18,17 @@
         android:theme="@style/AppTheme"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.icche.aisdatabase.WebviewActivity"></activity>
-        <activity android:name="com.icche.aisdatabase.DisplaySQLiteDataActivity"></activity>
+        <activity android:name="com.icche.rudf.WebviewActivity"></activity>
+        <activity android:name="com.icche.rudf.DisplaySQLiteDataActivity"></activity>
         <activity
-            android:name="com.icche.aisdatabase.WebviewActivityFile"
+            android:name="com.icche.rudf.WebviewActivityFile"
             android:configChanges="keyboard|keyboardHidden|locale|orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"
             android:windowSoftInputMode="adjustResize"></activity>
         <activity
-            android:name="com.icche.aisdatabase.SplashActivity"
+            android:name="com.icche.rudf.SplashActivity"
             android:configChanges="keyboard|keyboardHidden|locale|orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.icche.aisdatabase.AboutApp"
+            android:name="com.icche.rudf.AboutApp"
             android:configChanges="keyboard|keyboardHidden|locale|orientation|screenSize"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
@@ -51,12 +51,12 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.icche.aisdatabase.services.MyFirebaseInstanceIdService">
+        <service android:name="com.icche.rudf.services.MyFirebaseInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="com.icche.aisdatabase.services.MyFirebaseMessagingService">
+        <service android:name="com.icche.rudf.services.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
