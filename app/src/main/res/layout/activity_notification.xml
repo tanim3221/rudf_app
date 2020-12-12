@@ -15,7 +15,7 @@
         android:minHeight="?attr/actionBarSize"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:title="AIS Notifications"
+        app:title="RUDF Notifications"
         app:titleTextAppearance="@style/Toolbar.TitleText" >
 
         <ImageView
