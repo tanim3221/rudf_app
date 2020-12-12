@@ -27,6 +27,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,11 +48,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.blog.library.UpdateChecker;
 import com.github.angads25.filepicker.view.FilePickerDialog;
@@ -261,7 +264,19 @@ public class WebviewActivityFile extends AppCompatActivity {
                     UpdateChecker.checkForDialog(WebviewActivityFile.this);
                 }
             }, 1);
-            /*
+
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DrawerLayout navDrawer = findViewById(R.id.drawer_layout);
+                    // If the navigation drawer is not open then open it, if its already open then close it.
+                    if (!navDrawer.isDrawerOpen(Gravity.START)) navDrawer.openDrawer(Gravity.START);
+                    else navDrawer.closeDrawer(Gravity.END);
+                }
+            });
+
+
+     /*
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -270,7 +285,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                     dialog.show();
                 }
             });
-            */
+
 
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -346,6 +361,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                     popupMenu.show();
                 }
             });
+            */
 
             webView = (WebView) findViewById(R.id.webView);
             final WebSettings webSettings = webView.getSettings();
@@ -563,6 +579,8 @@ public class WebviewActivityFile extends AppCompatActivity {
         String appLinkAction = appLinkIntent.getAction();
         Uri appLinkData = appLinkIntent.getData();
         */
+
+
     }
 
     public void SQLiteDataBaseBuild() {
