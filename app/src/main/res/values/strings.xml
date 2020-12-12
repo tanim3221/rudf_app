@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RUDF Contact</string>
+    <string name="app_name">RUDF</string>
     <string name="prompt_email"> Enter Email</string>
     <string name="prompt_password">Enter Mobile</string>
     <string name="action_sign_in">Login</string>
@@ -8,7 +8,7 @@
     <string name="check_new_update">Check new update</string>
     <string name="check_new_update_error">Please connect to network</string>
     <string name="share">Share</string>
-    <string name="msg_share">RUDF Contact APP Download Link\n\n</string>
+    <string name="msg_share">RUDF APP Download Link\n\n</string>
     <string name="call_toast">Call app opening</string>
     <string name="email_toast">Email app opening</string>
     <string name="other_link_open">Opening your browser</string>
@@ -25,12 +25,13 @@
     <string name="GeneralMember"> General Member </string>
     <string name="AdviserMember"> Adviser </string>
     <string name="AlumniMember"> Alumni Member </string>
-    <string name="home"> RUDF Contact </string>
+    <string name="home"> RUDF </string>
     <string name="home_nav"> Home </string>
     <string name="FacebookGroup"> Facebook Group </string>
     <string name="FacebookPage"> Facebook Page</string>
     <string name="information">Informations</string>
     <string name="facebook">Facebook</string>
+    <string name="about">About</string>
     <string name="others">Others</string>
     <string name="rudf_title">Rajshahi University Debating Forum (RUDF)</string>
     <string name="ru_name">University of Rajshahi</string>
@@ -38,7 +39,7 @@
     <string name="notifications">Notifications</string>
     <string name="app_download_link">https://bit.ly/rudfapp</string>
     <string name="feedbackMail">astanim.3221@gmail.com</string>
-    <string name="feedbacksub">RUDF Contact Feedback</string>
+    <string name="feedbacksub">RUDF Feedback</string>
     <string name="feedTitle">Feedback</string>
     <string name="misson">Mission</string>
     <string name="misson_details">Express Yourself - it is the slogan of this organization. Through debating, creating knowledgeable, self-oriented, confident, patriotic manpower is the main mission.</string>
@@ -56,9 +57,9 @@
     <string name="mypro">My Profile</string>
     <string name="my_profile">My Profile</string>
     <string name="logout">Logout</string>
-    <string name="welcome_to_rudf_contact">Welcome to RUDF Contact</string>
+    <string name="welcome_to_rudf_contact">Welcome to RUDF</string>
     <string name="informations_home">Informations</string>
-    <string name="error_net"> Turn on mobile data or Wi-Fi to visit AIS Family Database. </string>
+    <string name="error_net"> Turn on mobile data or Wi-Fi to visit RUDF Family Database. </string>
     <string name="cancel">Cancel</string>
     <string name="retry_btn">Retry</string>
     <string name="download">"Downloading "</string>

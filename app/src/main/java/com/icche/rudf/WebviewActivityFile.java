@@ -49,6 +49,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -73,7 +74,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class WebviewActivityFile extends AppCompatActivity {
+public class WebviewActivityFile extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int INPUT_FILE_REQUEST_CODE = 1;
     private static final String TAG = WebviewActivityFile.class.getSimpleName();
@@ -203,6 +204,7 @@ public class WebviewActivityFile extends AppCompatActivity {
             setContentView(R.layout.activity_webview);
             //onNewIntent(getIntent());
             verifyStoragePermissions(this);
+            setNavigationViewListener();
             liContext = this.getApplicationContext();
             FrameLayout frameLayout = findViewById(R.id.layout);
             final FloatingActionButton floatingActionButton = findViewById(R.id.fab);
@@ -219,7 +221,9 @@ public class WebviewActivityFile extends AppCompatActivity {
                 progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.webcolor), PorterDuff.Mode.SRC_IN);
             }
 
-           /*
+
+        /*
+
             final SwipeRefreshLayout swipeRefreshLayout = frameLayout.findViewById(R.id.swipe);
             swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
             swipeRefreshLayout.setRefreshing(true);
@@ -271,7 +275,7 @@ public class WebviewActivityFile extends AppCompatActivity {
                     UpdateChecker.checkForDialog(WebviewActivityFile.this);
                 }
             }, 1);
-   /*
+
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @SuppressLint("WrongConstant")
                 @Override
@@ -280,11 +284,11 @@ public class WebviewActivityFile extends AppCompatActivity {
                     // If the navigation drawer is not open then open it, if its already open then close it.
                     if (!navDrawer.isDrawerOpen(Gravity.START)) navDrawer.openDrawer(Gravity.START);
                     else navDrawer.closeDrawer(Gravity.END);
-                                   }
+                }
             });
 
 
-
+ /*
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -295,139 +299,6 @@ public class WebviewActivityFile extends AppCompatActivity {
             });
 
 */
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PopupMenu popupMenu = new PopupMenu(WebviewActivityFile.this, floatingActionButton);
-
-                    try {
-                        Field[] fields = popupMenu.getClass().getDeclaredFields();
-                        for (Field field : fields) {
-                            if ("mPopup".equals(field.getName())) {
-                                field.setAccessible(true);
-                                Object menuPopoupHelper = field.get(popupMenu);
-                                Class<?> classPopupHelper = Class.forName(menuPopoupHelper.getClass().getName());
-                                Method setForceIcon = classPopupHelper.getMethod("setForceShowIcon", boolean.class);
-                                setForceIcon.invoke(menuPopoupHelper, true);
-                                break;
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    popupMenu.getMenuInflater().inflate(R.menu.custom_menu, popupMenu.getMenu());
-
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()) {
-                                case R.id.nav_share:
-                                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                                    shareIntent.setType("text/plain");
-                                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, (getString(R.string.app_name)));
-                                    String shareMessage = (getString(R.string.msg_share));
-                                    shareMessage = shareMessage + getString(R.string.app_download_link);
-                                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
-                                    startActivity(Intent.createChooser(shareIntent, (getString(R.string.share))));
-                                    break;
-                                case R.id.nav_about:
-                                    Intent a = new Intent(WebviewActivityFile.this, About.class);
-                                    startActivity(a);
-                                    break;
-
-                                case R.id.FacebookGroup:
-                                    if (isNetworkStatusAvialable(getApplicationContext())) {
-                                        if (isAppInstalled(liContext, "com.facebook.orca") || isAppInstalled(liContext, "com.facebook.katana")
-                                                || isAppInstalled(liContext, "com.example.facebook") || isAppInstalled(liContext, "com.facebook.android")) {
-                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(fbapp)));
-                                        } else {
-                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(fburl)));
-                                        }
-
-                                    } else {
-                                        String titleText = getString(R.string.fb_grp);
-                                        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
-                                        SpannableStringBuilder color = new SpannableStringBuilder(titleText);
-                                        color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
-                                        builder.setTitle(getString(R.string.connect_net))
-                                                .setMessage(color)
-                                                /*.setNegativeButton(getString(R.string.ok_btn), null)*/
-                                                .setCancelable(true)
-                                                .show();
-                                    }
-                                    break;
-
-                                case R.id.FacebookPage:
-                                    if (isNetworkStatusAvialable(getApplicationContext())) {
-                                        if (isAppInstalled(liContext, "com.facebook.orca") || isAppInstalled(liContext, "com.facebook.katana")
-                                                || isAppInstalled(liContext, "com.example.facebook") || isAppInstalled(liContext, "com.facebook.android")) {
-                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pageApp)));
-                                        } else {
-                                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pageurl)));
-                                        }
-
-                                    } else {
-                                        String titleText = getString(R.string.fb_grp);
-                                        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
-                                        SpannableStringBuilder color = new SpannableStringBuilder(titleText);
-                                        color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
-                                        builder.setTitle(getString(R.string.connect_net))
-                                                .setMessage(color)
-                                                /* .setNegativeButton(getString(R.string.ok_btn), null)*/
-                                                .setCancelable(true)
-                                                .show();
-                                    }
-                                    break;
-
-                                case R.id.nav_exit:
-                                    int pid = android.os.Process.myPid();
-                                    android.os.Process.killProcess(pid);
-
-                                    Intent intente = new Intent(Intent.ACTION_MAIN);
-                                    intente.addCategory(Intent.CATEGORY_HOME);
-                                    startActivity(intente);
-                                    break;
-
-                                case R.id.nav_feedback:
-                                    Intent feedback = new Intent(Intent.ACTION_SENDTO);
-                                    feedback.setType("text/email");
-                                    feedback.setData(Uri.parse("mailto:"));
-                                    feedback.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.feedbackMail)});
-                                    feedback.putExtra(Intent.EXTRA_SUBJECT, (getString(R.string.feedbacksub)));
-                                    feedback.putExtra(Intent.EXTRA_TEXT, (getString(R.string.msg_feedback)));
-                                    startActivity(Intent.createChooser(feedback, (getString(R.string.feedTitle))));
-                                    break;
-
-                                case R.id.nav_about_app:
-                                    Intent about = new Intent(WebviewActivityFile.this, AboutApp.class);
-                                    startActivity(about);
-                                    break;
-                                case R.id.nav_notify:
-                                    Intent notify =new Intent(WebviewActivityFile.this, DisplaySQLiteDataActivity.class);
-                                    startActivity(notify);
-                                case R.id.nav_home:
-                                    webView.loadUrl(load_url);
-                                    break;
-
-                                case R.id.nav_refresh:
-                                    webView.reload();
-                                    break;
-
-                                case R.id.nav_update:
-                                    UpdateChecker.checkForDialog(WebviewActivityFile.this);
-                                    break;
-
-                            }
-                            return true;
-
-                        }
-                    });
-                    popupMenu.show();
-                }
-            });
 
 
             webView = (WebView) findViewById(R.id.webView);
@@ -587,9 +458,38 @@ public class WebviewActivityFile extends AppCompatActivity {
 
                 }
 
+                @SuppressLint("RestrictedApi")
                 public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
                     super.onPageStarted(view, url, favicon);
                     progressBar.setVisibility(View.VISIBLE);
+                    /*
+                    CookieManager cookieManager = CookieManager.getInstance();
+                    String cookies = cookieManager.getCookie(url);
+                    String[] cookie=cookies.split(";");
+                    for (int i=0; i<cookie.length; i++) {
+                        String[] cookieitem = cookie[i].split("=");
+                        Log.d(TAG, "Eat a cookie:" + cookieitem[0]);
+                        //Toast.makeText(getApplicationContext(), cookieitem[0], Toast.LENGTH_LONG).show();
+                        if(!url.contains("rudf.cf/database/index.php")){
+                            floatingActionButton.setVisibility(View.VISIBLE);
+                        } else {
+                            floatingActionButton.setVisibility(View.INVISIBLE);
+                        }
+                    }
+
+        //for (int i=0; i<cookie.length; i++) {
+         // }
+            if(cookies != null){
+                        String[] temp=cookies.split(";");
+                        for (String ar1 : temp ){
+                            if(ar1.contains(cookies)){
+                                String[] temp1=ar1.split("=");
+                                CookieName = temp1[1];
+                            }
+                        }
+                    }
+        */
 
                     /*swipeRefreshLayout.setRefreshing(true);*/
                     webView.loadUrl("javascript:(function() { " +
@@ -648,6 +548,12 @@ public class WebviewActivityFile extends AppCompatActivity {
         */
 
 
+    }
+
+
+    private void setNavigationViewListener() {
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     public void SQLiteDataBaseBuild() {
@@ -1106,6 +1012,113 @@ public class WebviewActivityFile extends AppCompatActivity {
             return true;
 
         }
+    }
+
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        switch (item.getItemId()) {
+            case R.id.nav_share:
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, (getString(R.string.app_name)));
+                String shareMessage = (getString(R.string.msg_share));
+                shareMessage = shareMessage + getString(R.string.app_download_link);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, (getString(R.string.share))));
+                break;
+            case R.id.nav_about:
+                Intent a = new Intent(WebviewActivityFile.this, About.class);
+                startActivity(a);
+                break;
+
+            case R.id.FacebookGroup:
+                if (isNetworkStatusAvialable(getApplicationContext())) {
+                    if (isAppInstalled(liContext, "com.facebook.orca") || isAppInstalled(liContext, "com.facebook.katana")
+                            || isAppInstalled(liContext, "com.example.facebook") || isAppInstalled(liContext, "com.facebook.android")) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(fbapp)));
+                    } else {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(fburl)));
+                    }
+
+                } else {
+                    String titleText = getString(R.string.fb_grp);
+                    ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
+                    SpannableStringBuilder color = new SpannableStringBuilder(titleText);
+                    color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
+                    builder.setTitle(getString(R.string.connect_net))
+                            .setMessage(color)
+                            /*.setNegativeButton(getString(R.string.ok_btn), null)*/
+                            .setCancelable(true)
+                            .show();
+                }
+                break;
+
+            case R.id.FacebookPage:
+                if (isNetworkStatusAvialable(getApplicationContext())) {
+                    if (isAppInstalled(liContext, "com.facebook.orca") || isAppInstalled(liContext, "com.facebook.katana")
+                            || isAppInstalled(liContext, "com.example.facebook") || isAppInstalled(liContext, "com.facebook.android")) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pageApp)));
+                    } else {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pageurl)));
+                    }
+
+                } else {
+                    String titleText = getString(R.string.fb_grp);
+                    ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.rgb(140, 140, 140));
+                    SpannableStringBuilder color = new SpannableStringBuilder(titleText);
+                    color.setSpan(foregroundColorSpan, 0, titleText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(WebviewActivityFile.this);
+                    builder.setTitle(getString(R.string.connect_net))
+                            .setMessage(color)
+                            /* .setNegativeButton(getString(R.string.ok_btn), null)*/
+                            .setCancelable(true)
+                            .show();
+                }
+                break;
+
+            case R.id.nav_exit:
+                int pid = android.os.Process.myPid();
+                android.os.Process.killProcess(pid);
+
+                Intent intente = new Intent(Intent.ACTION_MAIN);
+                intente.addCategory(Intent.CATEGORY_HOME);
+                startActivity(intente);
+                break;
+
+            case R.id.nav_feedback:
+                Intent feedback = new Intent(Intent.ACTION_SENDTO);
+                feedback.setType("text/email");
+                feedback.setData(Uri.parse("mailto:"));
+                feedback.putExtra(Intent.EXTRA_EMAIL, new String[]{getString(R.string.feedbackMail)});
+                feedback.putExtra(Intent.EXTRA_SUBJECT, (getString(R.string.feedbacksub)));
+                feedback.putExtra(Intent.EXTRA_TEXT, (getString(R.string.msg_feedback)));
+                startActivity(Intent.createChooser(feedback, (getString(R.string.feedTitle))));
+                break;
+
+            case R.id.nav_about_app:
+                Intent about = new Intent(WebviewActivityFile.this, AboutApp.class);
+                startActivity(about);
+                break;
+            case R.id.nav_notify:
+                Intent notify = new Intent(WebviewActivityFile.this, DisplaySQLiteDataActivity.class);
+                startActivity(notify);
+            case R.id.nav_home:
+                webView.loadUrl(load_url);
+                break;
+
+            case R.id.nav_refresh:
+                webView.reload();
+                break;
+
+            case R.id.nav_update:
+                UpdateChecker.checkForDialog(WebviewActivityFile.this);
+                break;
+        }
+        //close navigation drawer
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 }

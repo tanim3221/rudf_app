@@ -11,40 +11,62 @@
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="Home" />
-    <item
-        android:id="@+id/nav_notify"
-        android:icon="@drawable/ic_baseline_notifications_active_24"
-        android:title="Notifications" />
-    <item
-        android:id="@+id/FacebookPage"
-        android:icon="@drawable/ic_facebook"
-        android:title="@string/FacebookPage" />
-    <item
-        android:id="@+id/FacebookGroup"
-        android:icon="@drawable/ic_facebook"
-        android:title="@string/FacebookGroup" />
-    <item
-        android:id="@+id/nav_feedback"
-        android:icon="@drawable/ic_baseline_feedback_24"
-        android:title="Feedback" />
 
     <item
-        android:id="@+id/nav_update"
-        android:icon="@drawable/ic_baseline_cloud_download_24"
-        android:title="Check New Update" />
+        android:icon="@drawable/ic_facebook"
+        android:title="@string/facebook">
+        <menu>
+
+            <item
+                android:id="@+id/FacebookPage"
+                android:icon="@drawable/ic_facebook"
+                android:title="@string/FacebookPage" />
+            <item
+                android:id="@+id/FacebookGroup"
+                android:icon="@drawable/ic_facebook"
+                android:title="@string/FacebookGroup" />
+        </menu>
+    </item>
 
     <item
-        android:id="@+id/nav_about"
-        android:icon="@drawable/ic_baseline_info_24"
-        android:title="About RUDF" />
+        android:icon="@drawable/ic_baseline_grain_24"
+        android:title="@string/others">
+        <menu>
+            <item
+                android:id="@+id/nav_notify"
+                android:icon="@drawable/ic_baseline_notifications_active_24"
+                android:title="Notifications" />
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_baseline_feedback_24"
+                android:title="Feedback" />
+
+            <item
+                android:id="@+id/nav_update"
+                android:icon="@drawable/ic_baseline_cloud_download_24"
+                android:title="Check New Update" />
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_baseline_share_24"
+                android:title="@string/share" />
+        </menu>
+    </item>
     <item
-        android:id="@+id/nav_about_app"
         android:icon="@drawable/ic_baseline_info_24"
-        android:title="About App" />
-    <item
-        android:id="@+id/nav_share"
-        android:icon="@drawable/ic_baseline_share_24"
-        android:title="@string/share" />
+        android:title="@string/about">
+        <menu>
+
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_baseline_info_24"
+                android:title="About RUDF" />
+            <item
+                android:id="@+id/nav_about_app"
+                android:icon="@drawable/ic_baseline_info_24"
+                android:title="About App" />
+        </menu>
+    </item>
+
     <item
         android:id="@+id/nav_exit"
         android:icon="@drawable/exit_to_app"
