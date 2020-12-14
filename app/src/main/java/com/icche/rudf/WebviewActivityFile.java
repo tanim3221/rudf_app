@@ -1026,10 +1026,6 @@ public class WebviewActivityFile extends AppCompatActivity implements Navigation
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                 startActivity(Intent.createChooser(shareIntent, (getString(R.string.share))));
                 break;
-            case R.id.nav_about:
-                Intent a = new Intent(WebviewActivityFile.this, About.class);
-                startActivity(a);
-                break;
 
             case R.id.FacebookGroup:
                 if (isNetworkStatusAvialable(getApplicationContext())) {

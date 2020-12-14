@@ -324,10 +324,6 @@ public class WebviewActivityFile23112020 extends AppCompatActivity {
                                     startActivity(Intent.createChooser(feedback, (getString(R.string.feedTitle))));
                                     break;
 
-                                case R.id.nav_about:
-                                    Intent about = new Intent(WebviewActivityFile23112020.this, AboutApp.class);
-                                    startActivity(about);
-                                    break;
                                 case R.id.nav_notify:
                                     Intent notify = new Intent(WebviewActivityFile23112020.this, DisplaySQLiteDataActivity.class);
                                     startActivity(notify);

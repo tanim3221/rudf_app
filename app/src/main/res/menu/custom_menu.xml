@@ -49,28 +49,15 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_baseline_share_24"
                 android:title="@string/share" />
-        </menu>
-    </item>
-    <item
-        android:icon="@drawable/ic_baseline_info_24"
-        android:title="@string/about">
-        <menu>
 
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_baseline_info_24"
-                android:title="About RUDF" />
             <item
                 android:id="@+id/nav_about_app"
                 android:icon="@drawable/ic_baseline_info_24"
-                android:title="About App" />
+                android:title="About" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/exit_to_app"
+                android:title="Exit" />
         </menu>
     </item>
-
-    <item
-        android:id="@+id/nav_exit"
-        android:icon="@drawable/exit_to_app"
-        android:title="Exit" />
-
-
 </menu>
