@@ -463,6 +463,7 @@ public class WebviewActivityFile extends AppCompatActivity implements Navigation
 
                     super.onPageStarted(view, url, favicon);
                     progressBar.setVisibility(View.VISIBLE);
+                    webView.setVisibility(View.GONE);
                     /*
                     CookieManager cookieManager = CookieManager.getInstance();
                     String cookies = cookieManager.getCookie(url);
@@ -502,6 +503,7 @@ public class WebviewActivityFile extends AppCompatActivity implements Navigation
                 public void onPageFinished(WebView view, String url) {
                     /*  swipeRefreshLayout.setRefreshing(false);*/
                     progressBar.setVisibility(View.GONE);
+                    webView.setVisibility(View.VISIBLE);
                     // hide element by class name
                     webView.loadUrl("javascript:(function() { " +
                             "document.getElementsByClassName('wrong_info_report_card')[0].style.display='none'; })()");

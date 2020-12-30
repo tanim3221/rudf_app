@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 2,
-      "versionName": "rudf.14122020",
+      "versionCode": 3,
+      "versionName": "rudf.29122020",
       "enabled": true,
       "outputFile": "app-release.apk"
     }
